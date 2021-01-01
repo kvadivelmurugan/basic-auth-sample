@@ -7,7 +7,8 @@
 import React, { Component } from 'react'
 import HeaderComponent from './header/HeaderComponent.jsx'
 import HomeComponent from './home/HomeComponent.jsx'
-
+import ContactForm from './contacts/ContactForm.jsx'
+import ContactList from './contacts/ContactList.jsx'
 
 class AppComponent extends Component {
     constructor (props) {
@@ -17,8 +18,10 @@ class AppComponent extends Component {
     render () {
         return (
             <div >
-                <HeaderComponent/>
+                <HeaderComponent />
                 <HomeComponent />
+                <ContactForm />
+                <ContactList />
             </div>
         )
     }
