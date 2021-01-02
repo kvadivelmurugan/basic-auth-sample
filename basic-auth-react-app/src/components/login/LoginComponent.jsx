@@ -6,6 +6,12 @@ class LoginComponent extends Component {
         super(props)
 
         this.handleClickOfLogin = this.handleClickOfLogin.bind(this)
+        this.handleOnChange = this.handleOnChange.bind(this)
+
+        this.state = {
+            email: '',
+            password: ''
+        }
     }
 
     render() {
@@ -32,13 +38,13 @@ class LoginComponent extends Component {
                             
                             <div className="form-group">
                                 <label for="inputEmail">Email</label>
-                                <input type="email" className="form-control" id="inputEmail" placeholder="Email" />
+                                <input type="text" className="form-control" id="inputEmail" placeholder="Email" name="email" value={this.state.email} onChange={this.handleOnChange}/>
                             </div>
                         
                         
                             <div className="form-group">
-                                <label for="inputPassword">Email</label>
-                                <input type="Password" className="form-control" id="inputPassword" placeholder="Password" />
+                                <label for="inputPassword">Password</label>
+                                <input type="Password" className="form-control" id="inputPassword" placeholder="Password" name="password" value={this.state.password} onChange={this.handleOnChange}/>
                             </div>
                             
                             
@@ -56,6 +62,12 @@ class LoginComponent extends Component {
 
     handleClickOfLogin () {
         this.props.history.push ("/home")
+    }
+
+    handleOnChange (event) {
+        this.setState ({
+            [event.target.name] : event.target.value
+        })
     }
 }
 

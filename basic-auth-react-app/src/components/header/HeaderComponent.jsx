@@ -29,17 +29,14 @@ class HeaderComponent extends Component {
                                 <a className="nav-link" href="/contacts">Contacts</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Expenses</a>
+                                <a className="nav-link" href="/expenses">Expenses</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Events</a>
+                                <a className="nav-link" href="/events">Events</a>
                             </li>                        
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Notes</a>
-                            </li>                        
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">Todo</a>
-                            </li>                        
+                                <a className="nav-link" href="/notes">Notes</a>
+                            </li>                                              
                         </ul>
                         <ul className="nav ml-auto">
                             <li className="nav-item dropdown">
