@@ -4,6 +4,8 @@ import React, { Component } from 'react'
 class ContactForm extends Component {
     constructor(props) {
         super(props)
+
+        this.handleClickOnBack = this.handleClickOnBack.bind(this)        
     }
 
     render() {
@@ -11,76 +13,77 @@ class ContactForm extends Component {
             <div className="card text-left">
                 <div className="card-header bg-transparent">
                     <h4>Contacts</h4>
+                    <p className="text-left">Contacts {">"} Add</p>
                 </div>
                 <div className="card-body">
                     <form>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
+                        <div className="form-row">
+                            <div className="form-group col-md-4">
                                 <label for="inputNickName4">Nick name</label>
-                                <input type="text" class="form-control" id="inputNickName4" placeholder="Nick name" />
+                                <input type="text" className="form-control" id="inputNickName4" placeholder="Nick name" />
                             </div>
-                            <div class="form-group col-md-4">
-                                <label for="inputFirstname4">Password</label>
-                                <input type="text" class="form-control" id="inputFirstname4" placeholder="First name" />
+                            <div className="form-group col-md-4">
+                                <label for="inputFirstname4">First name</label>
+                                <input type="text" className="form-control" id="inputFirstname4" placeholder="First name" />
                             </div>
-                            <div class="form-group col-md-4">
-                                <label for="inputLastname4">Password</label>
-                                <input type="text" class="form-control" id="inputLastname4" placeholder="Last name" />
+                            <div className="form-group col-md-4">
+                                <label for="inputLastname4">Last name</label>
+                                <input type="text" className="form-control" id="inputLastname4" placeholder="Last name" />
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
+                        <div className="form-row">
+                            <div className="form-group col-md-6">
                                 <label for="inputEmail4">Email</label>
-                                <input type="email" class="form-control" id="inputEmail4" placeholder="Email" />
+                                <input type="email" className="form-control" id="inputEmail4" placeholder="Email" />
                             </div>
-                            <div class="form-group col-md-6">
+                            <div className="form-group col-md-6">
                                 <label for="inputPassword4">Password</label>
-                                <input type="password" class="form-control" id="inputPassword4" placeholder="Password" />
+                                <input type="password" className="form-control" id="inputPassword4" placeholder="Password" />
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div className="form-group">
                             <label for="inputAddress">Address</label>
-                            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" />
+                            <input type="text" className="form-control" id="inputAddress" placeholder="1234 Main St" />
                         </div>
-                        <div class="form-group">
+                        <div className="form-group">
                             <label for="inputAddress2">Address 2</label>
-                            <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" />
+                            <input type="text" className="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" />
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
+                        <div className="form-row">
+                            <div className="form-group col-md-6">
                                 <label for="inputCity">City</label>
-                                <input type="text" class="form-control" id="inputCity" />
+                                <input type="text" className="form-control" id="inputCity" />
                             </div>
-                            <div class="form-group col-md-4">
+                            <div className="form-group col-md-4">
                                 <label for="inputState">State</label>
-                                <select id="inputState" class="form-control">
+                                <select id="inputState" className="form-control">
                                     <option selected>Choose...</option>
                                     <option>...</option>
                                 </select>
                             </div>
-                            <div class="form-group col-md-2">
+                            <div className="form-group col-md-2">
                                 <label for="inputZip">Zip</label>
-                                <input type="text" class="form-control" id="inputZip" />
+                                <input type="text" className="form-control" id="inputZip" />
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
+                        <div className="form-row">
+                            <div className="form-group col-md-4">
                                 <label for="inputMobile">Mobile #</label>
-                                <input type="text" class="form-control" id="inputMobile" />
+                                <input type="text" className="form-control" id="inputMobile" />
                             </div>
-                            <div class="form-group col-md-4">
+                            <div className="form-group col-md-4">
                                 <label for="inputHome">Home #</label>
-                                <input type="text" class="form-control" id="inputHome" />
+                                <input type="text" className="form-control" id="inputHome" />
                             </div>
-                            <div class="form-group col-md-4">
+                            <div className="form-group col-md-4">
                                 <label for="inputWork">Work #</label>
-                                <input type="text" class="form-control" id="inputWork" />
+                                <input type="text" className="form-control" id="inputWork" />
                             </div>
                         </div>                        
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
+                        <div className="form-row">
+                            <div className="form-group col-md-4">
                                 <label for="inputRelationship">Relationship</label>
-                                <select id="inputRelationship" class="form-control">
+                                <select id="inputRelationship" className="form-control">
                                     <option selected>Choose...</option>
                                     <option>Parents</option>
                                     <option>Spouse</option>
@@ -89,28 +92,32 @@ class ContactForm extends Component {
                                     <option>Others</option>
                                 </select>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div className="form-group col-md-4">
                                 <label for="inputGroups">Groups</label>
-                                <select id="inputGroups" class="form-control">
+                                <select id="inputGroups" className="form-control">
                                     <option selected>Choose...</option>
                                     <option>Family</option>
                                     <option>Coworkers</option>
                                     <option>Friends</option>
                                 </select>
                             </div>     
-                            <div class="form-group col-md-4">
+                            <div className="form-group col-md-4">
                                 <label for="inputWorkinfo">Work info</label>
-                                <input type="text" class="form-control" id="inputWorkinfo" />
+                                <input type="text" className="form-control" id="inputWorkinfo" />
                             </div>                                                     
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button> &nbsp;
-                        <button type="submit" class="btn btn-primary">Reset</button>
+                        <button type="submit" className="btn btn-primary">Submit</button> &nbsp;
+                        <button type="submit" className="btn btn-primary">Reset</button> &nbsp;
+                        <button type="submit" className="btn btn-primary" onClick={this.handleClickOnBack}>Back</button>
                     </form>
                 </div>                
             </div>
         )
     }
 
+    handleClickOnBack () {
+        this.props.history.push ("/contacts")
+    }
 }
 
 export default ContactForm

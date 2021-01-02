@@ -5,10 +5,15 @@
  * Developed by vini technology solutions
  */
 import React, { Component } from 'react'
+import {BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+
 import HeaderComponent from './header/HeaderComponent.jsx'
+import LoginComponent from './login/LoginComponent.jsx'
 import HomeComponent from './home/HomeComponent.jsx'
 import ContactForm from './contacts/ContactForm.jsx'
 import ContactList from './contacts/ContactList.jsx'
+
+
 
 class AppComponent extends Component {
     constructor (props) {
@@ -17,11 +22,20 @@ class AppComponent extends Component {
 
     render () {
         return (
-            <div >
+            <div className="container-fluid">
+                
                 <HeaderComponent />
-                <HomeComponent />
-                <ContactForm />
-                <ContactList />
+                <Router>
+                    <>
+                        <Switch>
+                            <Route path="/" exact component={LoginComponent}  />                    
+                            <Route path="/login" component={LoginComponent}  />                    
+                            <Route path="/home" component={HomeComponent}  />                    
+                            <Route path="/contacts" exact component={ContactList} />                        
+                            <Route path="/contacts/add" component={ContactForm} />                            
+                        </Switch>
+                    </>
+                </Router>
             </div>
         )
     }
