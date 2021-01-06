@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import BasicAuthService from '../../services/BasicAuthService.js'
 
 class LoginComponent extends Component {
     constructor(props) {
@@ -61,6 +61,7 @@ class LoginComponent extends Component {
     }
 
     handleClickOfLogin () {
+        BasicAuthService.doBasicAuth (this.state.email, this.state.password);
         this.props.history.push ("/home")
     }
 

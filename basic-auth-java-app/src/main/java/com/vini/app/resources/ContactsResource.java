@@ -1,4 +1,4 @@
-package com.vini.app.security.resource;
+package com.vini.app.resources;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
