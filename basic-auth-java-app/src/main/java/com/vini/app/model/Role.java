@@ -1,15 +1,21 @@
 package com.vini.app.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
-public class RolesModel {
+@Entity
+@Table (name = "roles")
+public class Role {
+    @Id
     private long roleId;
     private String roleName;
     private Date createdDate;
     private Date modifiedDate;
     private String status;
 
-    public RolesModel() {
+    public Role() {
     }
 
     public long getRoleId() {
@@ -50,5 +56,16 @@ public class RolesModel {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "roleId=" + roleId +
+                ", roleName='" + roleName + '\'' +
+                ", createdDate=" + createdDate +
+                ", modifiedDate=" + modifiedDate +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

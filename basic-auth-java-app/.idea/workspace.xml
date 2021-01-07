@@ -36,13 +36,13 @@
       <recent name="E:\k.vadivelmurugan\Projects\basic-auth-sample\basic-auth-java-app\src\main\resources" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="com.vini.app.security" />
       <recent name="com.vini.app" />
+      <recent name="com.vini.app.security" />
     </key>
   </component>
   <component name="RunManager">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.vini.app.security.App" />
+      <option name="MAIN_CLASS_NAME" value="com.vini.app.App" />
       <module name="basic-auth-java-app" />
       <method v="2">
         <option name="Make" enabled="true" />
