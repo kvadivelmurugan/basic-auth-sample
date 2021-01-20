@@ -66,3 +66,73 @@ INSERT INTO users_roles VALUES (10003, 10003);
 INSERT INTO users_roles VALUES (10004, 10004);
 INSERT INTO users_roles VALUES (10005, 10005);
 
+CREATE TABLE relationships (relationship_id BIGINT, relationship_name VARCHAR(50), PRIMARY KEY(relationship_id));
+INSERT INTO relationships VALUES (10001, 'PARENTS');
+INSERT INTO relationships VALUES (10002, 'SPOUSE');
+INSERT INTO relationships VALUES (10003, 'BROTHER');
+INSERT INTO relationships VALUES (10004, 'SISTER');
+INSERT INTO relationships VALUES (99999, 'OTHERS');
+
+CREATE TABLE cgroups (groupid BIGINT, group_name VARCHAR(50), PRIMARY KEY(groupid));
+INSERT INTO cgroups VALUES (10001, 'FAMILY');
+INSERT INTO cgroups VALUES (10002, 'COWORKER');
+INSERT INTO cgroups VALUES (10003, 'FRIEND');
+INSERT INTO cgroups VALUES (10004, 'EX-COWORKER');
+INSERT INTO cgroups VALUES (99999, 'OTHERS');
+
+CREATE TABLE countries (country_id BIGINT, iso_2 VARCHAR(2), iso_3 VARCHAR(3), country_name VARCHAR(50), PRIMARY KEY(country_id));
+
+INSERT into countries VALUES (10001, 'IN', 'IND', 'INDIA');
+INSERT into countries VALUES (10002, 'PK', 'PAK', 'PAKISTAN');
+INSERT into countries VALUES (10003, 'US', 'USA', 'UNITED STATES');
+
+CREATE TABLE states (state_id BIGINT, 
+	state_name VARCHAR(50), 
+	country_id BIGINT, 
+	PRIMARY KEY (state_id), 
+	FOREIGN KEY (country_id) references countries (country_id));
+	
+INSERT into states VALUES(10001, 'TAMILNADU', 10001);
+INSERT into states VALUES(10002, 'KERALA', 10001);
+INSERT into states VALUES(10003, 'ORISSA', 10001);
+INSERT into states VALUES(10004, 'PUNJAB', 10002);
+INSERT into states VALUES(10005, 'BALOCHISTAN', 10002);
+INSERT into states VALUES(10006, 'AZAD KASHMIR', 10002);
+INSERT into states VALUES(10007, 'NEWYORK', 10003);
+INSERT into states VALUES(10008, 'FLORIDA', 10003);
+INSERT into states VALUES(10009, 'CALIFORNIA', 10003);
+
+CREATE TABLE contacts (
+	contact_id BIGINT, 
+	nick_name VARCHAR(50) NOT NULL, 
+	first_name VARCHAR(50), 
+	last_name VARCHAR(50), 
+	personal_email VARCHAR(50) NOT NULL,
+	work_email VARCHAR(50),
+	primary_address VARCHAR(75) NOT NULL,
+	secondary_address VARCHAR(75),
+	city VARCHAR(50),
+	state_id BIGINT,
+	country_id BIGINT,
+	zip VARCHAR(10),
+	mobile VARCHAR(15),
+	home_phone VARCHAR(15),
+	work_phone VARCHAR(15),
+	relationship_id BIGINT NOT NULL,
+	groupid BIGINT NOT NULL,
+	status CHAR(1),
+	user_id BIGINT,
+	PRIMARY KEY (contact_id),
+	FOREIGN KEY (state_id) references states (state_id),
+	FOREIGN KEY (country_id) references countries (country_id),
+	FOREIGN KEY (relationship_id) references relationships (relationship_id),
+	FOREIGN KEY (groupid) references cgroups (groupid),
+	FOREIGN KEY (user_id) references users (user_id)
+);
+
+INSERT into contacts VALUES (10000001, 'KVM', 'Vadivel Murugan', 'K', 'kvadivelmurugan@gmail.com', '', 'F3 SAI ENCLACE SOWMIYA NAGAR PERUMBAKKAM', '', 'CHENNAI', 10001, 10001, '600100', '+91-9X4XXXXXXX', '', '', 10001, 10001, 'A', 10003);
+
+INSERT into contacts VALUES (10000002, 'VISH', 'Vishwa', 'V', 'v.v@email.com', '', '#1, 1st MAIN ROAD, RAJA ANNAMALAIPURAM', '', 'CHENNAI', 10001, 10001, '600100', '+91-9X4XXXXXXX', '', '', 10001, 10001, 'A', 10003);
+
+INSERT into contacts VALUES (10000003, 'RAJ', 'RAJ MADHAVAN', 'K', 'rajm@india.com', '', '#100 VEYIL STREET SANTHOSAPURAM', '', 'CHENNAI', 10001, 10001, '600100', '+91-9X4XXXXXXX', '', '', 10001, 10001, 'A', 10001);
+

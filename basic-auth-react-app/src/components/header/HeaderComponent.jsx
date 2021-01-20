@@ -5,6 +5,8 @@
  * Developed by vini technology solutions
  */
 import React, { Component } from 'react'
+import {withRouter} from 'react-router'
+import AuthService from '../../services/AuthService'
 import './HeaderComponent.css'
 
 class HeaderComponent extends Component {
@@ -12,7 +14,11 @@ class HeaderComponent extends Component {
         super (props)
     }
 
+    onClickLogout = this.onClickLogout.bind(this)
+
     render () {
+        const isUserAuthenticated = AuthService.isAuthenticated()
+        console.log (' isUserAuthenticated :: ' + AuthService.isAuthenticated())
         return (
             <>
                 <nav id="navMain" className="navbar navbar-expand-lg navbar-dark bg-faded">
@@ -22,23 +28,23 @@ class HeaderComponent extends Component {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul className="navbar-nav">
-                            <li className="nav-item active">
+                            {isUserAuthenticated && <li className="nav-item active">
                                 <a className="nav-link" href="/home">Home <span className="sr-only">(current)</span></a>
-                            </li>
-                            <li className="nav-item">
+                            </li>}
+                            {isUserAuthenticated && <li className="nav-item">
                                 <a className="nav-link" href="/contacts">Contacts</a>
-                            </li>
-                            <li className="nav-item">
+                            </li>}
+                            {isUserAuthenticated && <li className="nav-item">
                                 <a className="nav-link" href="/expenses">Expenses</a>
-                            </li>
-                            <li className="nav-item">
+                            </li>}
+                            {isUserAuthenticated && <li className="nav-item">
                                 <a className="nav-link" href="/events">Events</a>
-                            </li>                        
-                            <li className="nav-item">
+                            </li>}                        
+                            {isUserAuthenticated && <li className="nav-item">
                                 <a className="nav-link" href="/notes">Notes</a>
-                            </li>                                              
+                            </li>}                                              
                         </ul>
-                        <ul className="nav ml-auto">
+                        {isUserAuthenticated && <ul className="nav ml-auto">
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Profile
@@ -47,15 +53,20 @@ class HeaderComponent extends Component {
                                 <a className="dropdown-item" href="#">Account</a>
                                 <a className="dropdown-item" href="#">Preferences</a>
                                 <div className="dropdown-divider"></div>
-                                <a className="dropdown-item" href="#">Logout</a>
+                                <a className="dropdown-item" href="#" onClick = {this.onClickLogout}>Logout</a>
                                 </div>
                             </li> 
-                        </ul>
+                        </ul>}
                     </div>
                 </nav>
             </>
         )
     }
+
+    onClickLogout () {
+        AuthService.UnregisterLogin();
+        this.props.history.push ('/login')
+    }
 }
 
-export default HeaderComponent
+export default withRouter(HeaderComponent)

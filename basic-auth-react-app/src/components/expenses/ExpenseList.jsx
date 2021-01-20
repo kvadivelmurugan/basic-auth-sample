@@ -24,7 +24,7 @@ class ExpenseList extends Component {
                                 <select id="inputYear" className="form-control" name="expenseYear">
                                     <option value="0">Choose...</option>
                                     <option value="2020">2020</option>
-                                    <option value="2021" selected>2021</option>
+                                    <option value="2021" defaultValue>2021</option>
                                     <option value="2021">2022</option>
                                     <option value="2022">2023</option>
                                     <option value="2023">2024</option>
@@ -33,7 +33,7 @@ class ExpenseList extends Component {
                             <div className="form-group col-md-2">
                                 <label for="inputMonth">Month</label>
                                 <select id="inputMonth" className="form-control" name="expenseMonth">
-                                    <option value="0" selected>Choose...</option>
+                                    <option value="0" defaultValue>Choose...</option>
                                     <option value="1">January</option>
                                     <option value="2">February</option>
                                     <option value="3">March</option>

@@ -18,6 +18,7 @@ import EventForm from './events/EventForm.jsx'
 import EventList from './events/EventList.jsx'
 import NoteForm from './notes/NoteForm.jsx'
 import NoteList from './notes/NoteList.jsx'
+import AuthenticatedRoute from './AuthenticatedRoute.jsx'
 
 class AppComponent extends Component {
     constructor (props) {
@@ -27,22 +28,21 @@ class AppComponent extends Component {
     render () {
         return (
             <div className="container-fluid">
-                
-                <HeaderComponent />
                 <Router>
                     <>
+                        <HeaderComponent />
                         <Switch>
                             <Route path="/" exact component={LoginComponent}  />                    
                             <Route path="/login" component={LoginComponent}  />                    
-                            <Route path="/home" component={HomeComponent}  />                    
-                            <Route path="/contacts" exact component={ContactList} />                        
-                            <Route path="/contacts/add" component={ContactForm} />                            
-                            <Route path="/expenses" exact component={ExpenseList} />                        
-                            <Route path="/expenses/add" component={ExpenseForm} />                            
-                            <Route path="/events" exact component={EventList} />                        
-                            <Route path="/events/add" component={EventForm} />    
-                            <Route path="/notes" exact component={NoteList} />                        
-                            <Route path="/notes/add" component={NoteForm} />                            
+                            <AuthenticatedRoute path="/home" component={HomeComponent}  />                    
+                            <AuthenticatedRoute path="/contacts" exact component={ContactList} />                        
+                            <AuthenticatedRoute path="/contacts/add" component={ContactForm} />                            
+                            <AuthenticatedRoute path="/expenses" exact component={ExpenseList} />                        
+                            <AuthenticatedRoute path="/expenses/add" component={ExpenseForm} />                            
+                            <AuthenticatedRoute path="/events" exact component={EventList} />                        
+                            <AuthenticatedRoute path="/events/add" component={EventForm} />    
+                            <AuthenticatedRoute path="/notes" exact component={NoteList} />                        
+                            <AuthenticatedRoute path="/notes/add" component={NoteForm} />                            
                         </Switch>
                     </>
                 </Router>

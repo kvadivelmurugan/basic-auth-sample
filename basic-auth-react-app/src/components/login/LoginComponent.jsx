@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import BasicAuthService from '../../services/BasicAuthService.js'
+
+import ErrorHandlerService from '../../services/ErrorHandlerService.js'
+import AuthService from '../../services/AuthService.js'
 
 class LoginComponent extends Component {
     constructor(props) {
@@ -10,7 +12,8 @@ class LoginComponent extends Component {
 
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            errorMessage: ''
         }
     }
 
@@ -32,6 +35,7 @@ class LoginComponent extends Component {
                 <div className="card col-4 offset-md-8">
                     <div className="card-header bg-light text-center">
                         <h4>Login</h4>
+                        <h6 className="text-danger">{this.state.errorMessage}</h6>
                     </div>
                     <div className="card-body text-left">
                         <form>
@@ -61,8 +65,17 @@ class LoginComponent extends Component {
     }
 
     handleClickOfLogin () {
-        BasicAuthService.doBasicAuth (this.state.email, this.state.password);
-        this.props.history.push ("/home")
+        AuthService.doBasicAuth (this.state.email, this.state.password)
+            .then((response) => {
+                console.log ('auth success')
+                AuthService.registerLogin (this.state.email)
+                this.props.history.push ("/home")
+            }).catch(
+            (error) => {
+                this.setState ({
+                    errorMessage : ErrorHandlerService.handleError (error) 
+                })
+            })
     }
 
     handleOnChange (event) {
