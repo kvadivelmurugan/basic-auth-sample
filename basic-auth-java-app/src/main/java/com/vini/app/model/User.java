@@ -9,20 +9,28 @@ import java.util.List;
 public class User {
 
     @Id
+    @Column (name="user_id")
     private long userId;
 
+    @Column (name="user_name")
     private String userName;
 
+    @Column (name="password")
     private String password;
 
+    @Column (name="first_name")
     private String firstName;
 
+    @Column (name="last_name")
     private String lastName;
 
+    @Column (name="created_date")
     private Date createdDate;
 
+    @Column (name="modified_date")
     private Date modifiedDate;
-
+    
+    @Column (name="status")
     private String status;
 
     @OneToMany (targetEntity = Role.class, mappedBy = "roleId", fetch=FetchType.EAGER)

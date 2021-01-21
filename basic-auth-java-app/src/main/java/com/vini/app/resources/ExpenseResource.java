@@ -5,10 +5,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ContactsResource {
-
-    @RequestMapping(method = RequestMethod.GET, path = "/contacts")
-    public String getContacts() {
-        return ("<h1>Welcome to Contacts</h1>");
+public class ExpenseResource {
+    @RequestMapping(method = RequestMethod.GET, path = "/expenses")
+    public String getExpenses() {
+        return ("<h1>Welcome to Expenses</h1>");
     }
 }

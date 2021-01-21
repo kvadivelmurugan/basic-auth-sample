@@ -7,28 +7,30 @@ class AuthService {
 
         let authHeader = 'Basic ' + window.btoa(username + ":" + password);
 
-        return axios.post ('http://localhost:8080/auth/basic', {}, {
-            headers: {
-                authorization: authHeader
-                //'Access-Control-Allow-Origin': 'http://localhost:3000',
-                //'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
-            }
-        })
-         
+        return axios.post ('http://localhost:8080/auth/basic?userName='+username, 
+            { }, 
+            {
+                headers: {
+                    authorization: authHeader
+                    //'Access-Control-Allow-Origin': 'http://localhost:3000',
+                    //'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+                }
+            })
     }
 
-    registerLogin (username) {
-        sessionStorage.setItem('username', username)
+    registerLogin (userName, userId) {
+        sessionStorage.setItem('userName', userName)
+        sessionStorage.setItem('userId', userId)
     }
 
-    UnregisterLogin (username) {
-        sessionStorage.removeItem('username')
+    UnregisterLogin (userName) {
+        sessionStorage.removeItem('userName')
     } 
 
     isAuthenticated () {
-        let username = sessionStorage.getItem ('username')
-        console.log (username)
-        if (username) {
+        let userName = sessionStorage.getItem ('userName')
+        console.log (userName)
+        if (userName) {
             return true
         }
 
