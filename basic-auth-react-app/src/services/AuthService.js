@@ -1,13 +1,14 @@
 import axios from "axios"
 
+import api from "./_api.js"
+
 class AuthService {
-    doBasicAuth (username, password) {
-        console.log (username + " " + password)
+    doBasicAuth (userName, password) {
+        console.log (userName + " " + password)
 
+        let authHeader = this.getAuthHeader (userName, password)
 
-        let authHeader = 'Basic ' + window.btoa(username + ":" + password);
-
-        return axios.post ('http://localhost:8080/auth/basic?userName='+username, 
+        return api.post ('auth/basic?userName='+userName, 
             { }, 
             {
                 headers: {
@@ -18,22 +19,52 @@ class AuthService {
             })
     }
 
-    registerLogin (userName, userId) {
+    registerLogin (userName, password, userId) {
+        console.log ('registerLogin called...')
         sessionStorage.setItem('userName', userName)
         sessionStorage.setItem('userId', userId)
+
+        let authHeader = this.getAuthHeader(userName, password)
+        sessionStorage.setItem('authHeader', authHeader)
+        //this.setupAxiosInterceptorForRequest (authHeader)
+    }
+
+    setupAxiosInterceptorForRequest (authHeader) {
+        console.log ('interceptors called') 
+        axios.interceptors.request.use (
+            (config) => {
+                if (this.isUserAuthenticated ()) {                                       
+                    config.headers['authorization'] = authHeader                  
+                }
+                return config
+            }
+        )
     }
 
     UnregisterLogin (userName) {
         sessionStorage.removeItem('userName')
+        sessionStorage.removeItem('userId')
+        sessionStorage.removeItem('authHeader')
     } 
 
-    isAuthenticated () {
-        let userName = sessionStorage.getItem ('userName')
+    getLoggedInUserName() {
+        return sessionStorage.getItem ('userName');
+    }
+
+    getLoggedInUserId() {
+        return sessionStorage.getItem ('userId');
+    }
+
+    getAuthHeader (userName, password) {
+        return 'Basic ' + window.btoa(userName + ":" + password)
+    }
+
+    isUserAuthenticated () {
+        let userName = sessionStorage.getItem ('authHeader')
         console.log (userName)
         if (userName) {
             return true
         }
-
         return false
     }
 }

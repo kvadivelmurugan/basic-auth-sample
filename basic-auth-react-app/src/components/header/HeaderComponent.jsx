@@ -17,8 +17,8 @@ class HeaderComponent extends Component {
     onClickLogout = this.onClickLogout.bind(this)
 
     render () {
-        const isUserAuthenticated = AuthService.isAuthenticated()
-        console.log (' isUserAuthenticated :: ' + AuthService.isAuthenticated())
+        const isUserAuthenticated = AuthService.isUserAuthenticated()
+        console.log (' isUserAuthenticated :: ' + AuthService.isUserAuthenticated())
         return (
             <>
                 <nav id="navMain" className="navbar navbar-expand-lg navbar-dark bg-faded">

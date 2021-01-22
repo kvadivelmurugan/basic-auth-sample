@@ -1,12 +1,25 @@
 
 import React, { Component } from 'react'
-
+import AuthService from '../../services/AuthService'
+import ContactService from '../../services/ContactService'
 
 class ContactList extends Component {
     constructor(props) {
         super(props)
 
+        this.state = {
+            contactList : []
+        }
+
         this.handleClickOfAddContact = this.handleClickOfAddContact.bind(this)
+        this.getContacts = this.getContacts.bind(this)
+    }
+
+
+    componentDidMount () {
+        this.getContacts()
+        console.log ("Contact List " + this.state.contactList)
+
     }
 
     render() {
@@ -52,33 +65,29 @@ class ContactList extends Component {
                             <tr>
                                 <th scope="col">Nick name</th>
                                 <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Mobile #</th>
+                                <th scope="col">Personal Email</th>
+                                <th scope="col">Mobile</th>
+                                <th scope="col">Relationship</th>
+                                <th scope="col">Group</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>                                
-                                <td>Mark</td>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>Otto@gmail.com</td>
-                                <td>+91-44-12121123232</td>                                
-                            </tr>
-                            <tr>
-                                <td>Mark</td>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>Otto@gmail.com</td>
-                                <td>+91-44-12121123232</td>                              
-                            </tr>
-                            <tr>
-                                <td>Mark</td>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>Otto@gmail.com</td>
-                                <td>+91-44-12121123232</td>                              
-                            </tr>
+                            {
+                                this.state.contactList.map (
+                                    (contact) => {
+                                    return (
+                                        <tr>                                
+                                            <td>{contact.nickName}</td>
+                                            <td>{contact.firstName}</td>
+                                            <td>{contact.personalEmail}</td>
+                                            <td>{contact.mobile}</td>
+                                            <td>{contact.relationship.relationshipName}</td>  
+                                            <td>{contact.group.groupName}</td>                               
+                                        </tr>
+                                    )
+                                    }
+                                )
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -90,6 +99,19 @@ class ContactList extends Component {
         this.props.history.push("/contacts/add")
     }
 
+    getContacts () {
+        let userId = AuthService.getLoggedInUserId ();
+        
+        ContactService.getContacts (userId)
+        .then ((response) => {
+            console.log ('response ' + response.data)
+            this.setState ({
+                contactList : response.data
+            })
+        }).catch ((error) => {
+
+        })
+    }
 }
 
 export default ContactList

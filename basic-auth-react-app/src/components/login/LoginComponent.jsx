@@ -68,7 +68,7 @@ class LoginComponent extends Component {
         AuthService.doBasicAuth (this.state.email, this.state.password)
             .then((response) => {
                 console.log ('auth success' + response.data.userId)
-                AuthService.registerLogin (this.state.email, response.data.userId)
+                AuthService.registerLogin (this.state.email, this.state.password, response.data.userId)
                 this.props.history.push ("/home")
             }).catch(
             (error) => {

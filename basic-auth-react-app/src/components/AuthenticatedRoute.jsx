@@ -9,8 +9,8 @@ class AuthenticatedRoute extends Component {
     }
 
     render () {
-        console.log ('isAuthenticated ::: ' + AuthService.isAuthenticated())
-        if (AuthService.isAuthenticated()) {
+        console.log ('isUserAuthenticated ::: ' + AuthService.isUserAuthenticated())
+        if (AuthService.isUserAuthenticated()) {
             return <Route {...this.props} />
         } else {
             return <Redirect to="/login" />
