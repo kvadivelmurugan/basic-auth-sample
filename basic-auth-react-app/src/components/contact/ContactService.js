@@ -1,8 +1,8 @@
-import api from "./_api.js"
+import api from "../../services/_api"
 
 class ContactService {
     getContacts (userId) {
-        return api.get (`contacts/${userId}`, {})
+        return api.get (`contacts/${userId}`)
     }
 }
 

@@ -10,12 +10,12 @@ import {BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import HeaderComponent from './header/HeaderComponent.jsx'
 import LoginComponent from './login/LoginComponent.jsx'
 import HomeComponent from './home/HomeComponent.jsx'
-import ContactForm from './contacts/ContactForm.jsx'
-import ContactList from './contacts/ContactList.jsx'
-import ExpenseForm from './expenses/ExpenseForm.jsx'
-import ExpenseList from './expenses/ExpenseList.jsx'
-import EventForm from './events/EventForm.jsx'
-import EventList from './events/EventList.jsx'
+import ContactForm from './contact/ContactForm.jsx'
+import ContactList from './contact/ContactList.jsx'
+import ExpenseForm from './expense/ExpenseForm.jsx'
+import ExpenseList from './expense/ExpenseList.jsx'
+import EventForm from './event/EventForm.jsx'
+import EventList from './event/EventList.jsx'
 import NoteForm from './notes/NoteForm.jsx'
 import NoteList from './notes/NoteList.jsx'
 import AuthenticatedRoute from './AuthenticatedRoute.jsx'
@@ -35,8 +35,8 @@ class AppComponent extends Component {
                             <Route path="/" exact component={LoginComponent}  />                    
                             <Route path="/login" component={LoginComponent}  />                    
                             <AuthenticatedRoute path="/home" component={HomeComponent}  />                    
-                            <AuthenticatedRoute path="/contacts" exact component={ContactList} />                        
-                            <AuthenticatedRoute path="/contacts/add" component={ContactForm} />                            
+                            <Route path="/contacts" exact component={ContactList} />                        
+                            <Route path="/contacts/add" component={ContactForm} />                            
                             <AuthenticatedRoute path="/expenses" exact component={ExpenseList} />                        
                             <AuthenticatedRoute path="/expenses/add" component={ExpenseForm} />                            
                             <AuthenticatedRoute path="/events" exact component={EventList} />                        

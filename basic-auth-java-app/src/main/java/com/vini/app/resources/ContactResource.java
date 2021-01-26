@@ -14,7 +14,7 @@ public class ContactResource {
     ContactService contactService;
 
     @RequestMapping(method = RequestMethod.GET, path = "/contacts/{userId}", produces="application/json")
-    public List<Contact> getContacts(@PathVariable("userId") long userId) {
-        return contactService.findAllByUserUserId(userId);
+    public List<Contact> getContactsByUserId (@PathVariable("userId") long userId) {
+        return contactService.getContactsByUserId(userId);
     }
 }

@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react'
 import AuthService from '../../services/AuthService'
-import ContactService from '../../services/ContactService'
+import ContactService from './ContactService'
 
 class ContactList extends Component {
     constructor(props) {
@@ -75,16 +75,16 @@ class ContactList extends Component {
                             {
                                 this.state.contactList.map (
                                     (contact) => {
-                                    return (
-                                        <tr>                                
-                                            <td>{contact.nickName}</td>
-                                            <td>{contact.firstName}</td>
-                                            <td>{contact.personalEmail}</td>
-                                            <td>{contact.mobile}</td>
-                                            <td>{contact.relationship.relationshipName}</td>  
-                                            <td>{contact.group.groupName}</td>                               
-                                        </tr>
-                                    )
+                                        return (
+                                            <tr>                                
+                                                <td>{contact.nickName}</td>
+                                                <td>{contact.firstName}</td>
+                                                <td>{contact.personalEmail}</td>
+                                                <td>{contact.mobile}</td>
+                                                <td>{contact.relationship.relationshipName}</td>  
+                                                <td>{contact.group.groupName}</td>                               
+                                            </tr>
+                                        )
                                     }
                                 )
                             }

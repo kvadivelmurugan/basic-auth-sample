@@ -16,7 +16,7 @@ public class ContactService {
     @Autowired
     ContactRepository contactRepository;
 
-    public List<Contact> findAllByUserUserId (long userId) {
+    public List<Contact> getContactsByUserId (long userId) {
         return contactRepository.findAllByUserUserId(userId);
     }
 }
