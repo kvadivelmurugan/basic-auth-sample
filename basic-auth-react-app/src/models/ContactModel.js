@@ -1,3 +1,10 @@
+import AuthService from '../services/AuthService'
+import GroupModel from './GroupModel'
+import RelationshipModel from './RelationshipModel'
+import CountryModel from './CountryModel'
+import StateModel from './StateModel'
+
+
 const ContactModel = {
     contactId : '', 
 	nickName : '', 
@@ -8,16 +15,16 @@ const ContactModel = {
 	primaryAddress : '',
 	secondaryAddress : '',
 	city : '',
-	stateId : '',
-	countryId : 10001,
+	state : StateModel,
+	country : CountryModel,
 	zip : '',
 	mobile : '',
 	homePhone : '',
 	workPhone : '',
-	relationshipId : '',
-	groupId : '',
+	relationship : RelationshipModel,
+	group : GroupModel,	
 	status : '',
-	userId : ''
+	userId : AuthService.getLoggedInUserId()
 }
 
 export default ContactModel

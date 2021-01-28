@@ -3,25 +3,29 @@ import React, { Component } from 'react'
 
 import CountryComponent from '../country/CountryComponent.jsx'
 import StateComponent from '../state/StateComponent.jsx'
+import RelationshipComponent from '../relationship/RelationshipComponent.jsx'
+import GroupComponent from '../group/GroupComponent.jsx'
 
 import ContactModel from '../../models/ContactModel'
 
-import CountryService from '../country/CountryService'
+import AuthService from '../../services/AuthService'
 
 class ContactForm extends Component {
     constructor(props) {
+        console.log ('getLoggedInUserId ' + AuthService.getLoggedInUserId())
         super(props)
 
         this.state = {
-            contact : ContactModel,
-            countryList : []
+            contact : ContactModel            
         }      
 
         this.handleOnChange = this.handleOnChange.bind (this)
     }
+
     componentDidMount () {
-        this.getCountries ()
+
     }
+
     render() {
         return (
             <div className="card text-left">
@@ -34,6 +38,7 @@ class ContactForm extends Component {
                         <div className="form-row">
                             <div className="form-group col-md-4">
                                 <label for="inputNickName4">Nick name</label>
+                                <input type="hidden" className="form-control" id="inputUserId" placeholder="userId" name="userId" value={this.state.contact.nickName}/>
                                 <input type="text" className="form-control" id="inputNickName4" placeholder="Nick name" name="nickName" value={this.state.contact.nickName} onChange={this.handleOnChange}/>
                             </div>
                             <div className="form-group col-md-4">
@@ -69,11 +74,11 @@ class ContactForm extends Component {
                                 <select id="inputState" className="form-control">
                                     <option selected>Choose...</option>
                                     <option>...</option>
-                                </select> 
+                                </select> */ }
 
-                                <CountryComponent componentName="countryId" selectedCountry="this.state.contact.countryId" onChangeMethod={this.handleOnChange} countryList={this.state.countryList}/> */ }
+                                <CountryComponent componentName="countryId" selectedCountry={this.state.contact.country.countryId} onChangeMethod={this.handleCountryOnChange} /> 
 
-                                <label for="inputCountry">Country</label>
+                                {/* <label for="inputCountry">Country</label>
                                 <select id="inputCountry" className="form-control" name="countryId" 
                                     value={this.state.contact.countryId}
                                     onChange={this.handleOnChange}>
@@ -85,7 +90,7 @@ class ContactForm extends Component {
                                             )
                                         })
                                     }
-                                </select>
+                                </select> */}
                             </div>
                             <div className="form-group col-md-3">
                                 {/* <label for="inputState">State</label>
@@ -94,7 +99,7 @@ class ContactForm extends Component {
                                     <option>...</option>
                                 </select> */}
 
-                                <StateComponent countryId={this.state.contact.countryId}/>
+                                <StateComponent componentName="state.stateId" selectedCountry={this.state.contact.country.countryId}  selectedState={this.state.contact.state.stateId} onChangeMethod={this.handleOnChange}/>
                             </div>
                             <div className="form-group col-md-4">
                                 <label for="inputCity">City</label>
@@ -103,48 +108,31 @@ class ContactForm extends Component {
                             
                             <div className="form-group col-md-2">
                                 <label for="inputZip">Zip</label>
-                                <input type="text" className="form-control" id="inputZip" />
+                                <input type="text" className="form-control" id="inputZip" name="zip" value={this.state.contact.zip} onChange={this.handleOnChange}/>
                             </div>
                         </div>
                         <div className="form-row">
-                            <div className="form-group col-md-4">
+                            <div className="form-group col-md-2">
                                 <label for="inputMobile">Mobile #</label>
-                                <input type="text" className="form-control" id="inputMobile" />
+                                <input type="text" className="form-control" id="inputMobile" name="mobile" value={this.state.contact.mobile} onChange={this.handleOnChange}/>
                             </div>
-                            <div className="form-group col-md-4">
+                            <div className="form-group col-md-2">
                                 <label for="inputHome">Home #</label>
-                                <input type="text" className="form-control" id="inputHome" />
+                                <input type="text" className="form-control" id="inputHome" name="homePhone" value={this.state.contact.homePhone} onChange={this.handleOnChange}/>
                             </div>
-                            <div className="form-group col-md-4">
+                            <div className="form-group col-md-2">
                                 <label for="inputWork">Work #</label>
-                                <input type="text" className="form-control" id="inputWork" />
+                                <input type="text" className="form-control" id="inputWork" name="workPhone" value={this.state.contact.workPhone} onChange={this.handleOnChange}/>                                
                             </div>
+                            <div className="form-group col-md-3">
+                                <RelationshipComponent componentName="relationship.relationshipId" selectedRelationship={this.state.contact.relationship.relationshipId} onChangeMethod={this.handleOnChange} /> 
+                            </div>
+                            <div className="form-group col-md-3">
+                                <GroupComponent componentName="group.groupId" selectedGroup={this.state.contact.group.groupId} onChangeMethod={this.handleOnChange} /> 
+                            </div>                                                       
+
                         </div>                        
                         <div className="form-row">
-                            <div className="form-group col-md-4">
-                                <label for="inputRelationship">Relationship</label>
-                                <select id="inputRelationship" className="form-control">
-                                    <option selected>Choose...</option>
-                                    <option>Parents</option>
-                                    <option>Spouse</option>
-                                    <option>Brother</option>
-                                    <option>Sister</option>
-                                    <option>Others</option>
-                                </select>
-                            </div>
-                            <div className="form-group col-md-4">
-                                <label for="inputGroups">Groups</label>
-                                <select id="inputGroups" className="form-control">
-                                    <option selected>Choose...</option>
-                                    <option>Family</option>
-                                    <option>Coworkers</option>
-                                    <option>Friends</option>
-                                </select>
-                            </div>     
-                            <div className="form-group col-md-4">
-                                <label for="inputWorkinfo">Work info</label>
-                                <input type="text" className="form-control" id="inputWorkinfo" />
-                            </div>                                                     
                         </div>
                         <button type="submit" className="btn btn-primary">Submit</button> &nbsp;
                         <button type="submit" className="btn btn-primary">Reset</button> &nbsp;
@@ -169,16 +157,18 @@ class ContactForm extends Component {
         console.log ('country ' + this.state.contact.countryId)
     }
 
-    getCountries = () => {
-        CountryService.getCountries ()
-            .then ((response) => {
-                this.setState ({
-                    countryList:response.data
-                })                    
-            })
-            .catch ((error) => {
+    handleCountryOnChange = (event) => {
+        console.log ('object ' + event.target.name)
+        console.log ('value ' + event.target.value)
 
-            })
+        let country = this.state.contact.country
+
+        country.countryId = event.target.value
+
+        this.setState ({
+            contact: { ...this.state.contact, country: country }
+        })
+        console.log ('country ' + this.state.contact.countryId)
     }
 }
 

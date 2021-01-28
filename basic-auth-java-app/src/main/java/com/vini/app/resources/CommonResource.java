@@ -1,6 +1,8 @@
 package com.vini.app.resources;
 
 import com.vini.app.model.Country;
+import com.vini.app.model.Group;
+import com.vini.app.model.Relationship;
 import com.vini.app.model.State;
 import com.vini.app.services.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,4 +28,15 @@ public class CommonResource {
     public List<Country> getCountries () {
         return commonService.getCountries();
     }
+
+    @RequestMapping (method = RequestMethod.GET, path = "/relationships", produces = "application/json")
+    public List<Relationship> getRelationships () {
+        return commonService.getRelationships();
+    }
+
+    @RequestMapping (method = RequestMethod.GET, path = "/groups", produces = "application/json")
+    public List<Group> getGroups () {
+        return commonService.getGroups();
+    }
+
 }

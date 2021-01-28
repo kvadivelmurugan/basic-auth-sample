@@ -19,4 +19,6 @@ public class ContactService {
     public List<Contact> getContactsByUserId (long userId) {
         return contactRepository.findAllByUserUserId(userId);
     }
+
+    public Contact saveContact (Contact contact) { return contactRepository.save (contact); }
 }
