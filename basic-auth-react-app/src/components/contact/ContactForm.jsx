@@ -5,10 +5,12 @@ import CountryComponent from '../country/CountryComponent.jsx'
 import StateComponent from '../state/StateComponent.jsx'
 import RelationshipComponent from '../relationship/RelationshipComponent.jsx'
 import GroupComponent from '../group/GroupComponent.jsx'
+import ConfirmDialogComponent from '../../components/confirm_dialog/ConfirmDialogComponent.jsx'
 
 import ContactModel from '../../models/ContactModel'
 
 import AuthService from '../../services/AuthService'
+import ContactService from './ContactService'
 
 class ContactForm extends Component {
     constructor(props) {
@@ -17,13 +19,11 @@ class ContactForm extends Component {
 
         this.state = {
             contact : ContactModel            
-        }      
-
-        this.handleOnChange = this.handleOnChange.bind (this)
+        }              
     }
 
     componentDidMount () {
-
+        this.initialize () 
     }
 
     render() {
@@ -76,7 +76,7 @@ class ContactForm extends Component {
                                     <option>...</option>
                                 </select> */ }
 
-                                <CountryComponent componentName="countryId" selectedCountry={this.state.contact.country.countryId} onChangeMethod={this.handleCountryOnChange} /> 
+                                <CountryComponent componentName="country" selectedCountry={this.state.contact.country} onChangeMethod={this.handleCountryOnChange} /> 
 
                                 {/* <label for="inputCountry">Country</label>
                                 <select id="inputCountry" className="form-control" name="countryId" 
@@ -99,7 +99,7 @@ class ContactForm extends Component {
                                     <option>...</option>
                                 </select> */}
 
-                                <StateComponent componentName="state.stateId" selectedCountry={this.state.contact.country.countryId}  selectedState={this.state.contact.state.stateId} onChangeMethod={this.handleOnChange}/>
+                                <StateComponent componentName="state" selectedCountry={this.state.contact.country.countryId}  selectedState={this.state.contact.state} onChangeMethod={this.handleStateOnChange}/>
                             </div>
                             <div className="form-group col-md-4">
                                 <label for="inputCity">City</label>
@@ -125,17 +125,17 @@ class ContactForm extends Component {
                                 <input type="text" className="form-control" id="inputWork" name="workPhone" value={this.state.contact.workPhone} onChange={this.handleOnChange}/>                                
                             </div>
                             <div className="form-group col-md-3">
-                                <RelationshipComponent componentName="relationship.relationshipId" selectedRelationship={this.state.contact.relationship.relationshipId} onChangeMethod={this.handleOnChange} /> 
+                                <RelationshipComponent componentName="relationship" selectedRelationship={this.state.contact.relationship} onChangeMethod={this.handleRelationshipOnChange} /> 
                             </div>
                             <div className="form-group col-md-3">
-                                <GroupComponent componentName="group.groupId" selectedGroup={this.state.contact.group.groupId} onChangeMethod={this.handleOnChange} /> 
+                                <GroupComponent componentName="group" selectedGroup={this.state.contact.group} onChangeMethod={this.handleGroupOnChange} /> 
                             </div>                                                       
 
                         </div>                        
                         <div className="form-row">
                         </div>
-                        <button type="submit" className="btn btn-primary">Submit</button> &nbsp;
-                        <button type="submit" className="btn btn-primary">Reset</button> &nbsp;
+                        <button type="button" className="btn btn-primary" onClick={this.showConfirmDiag}>Submit</button> &nbsp;
+                        <button type="button" className="btn btn-primary">Reset</button> &nbsp;
                         <button type="button" className="btn btn-primary" onClick={this.handleClickOnBack}>Back</button>
                     </form>
                 </div>                
@@ -144,11 +144,30 @@ class ContactForm extends Component {
     }
 
     handleClickOnBack = () => {
-        //this.props.history.push ("/contacts")
+        this.props.history.push ("/contacts")
         console.log (this.state.contact)    
     }
 
-    handleOnChange (event) {
+    handleClickOnYes = () => {
+        console.log ('Yes')    
+
+        this.modal.modal()
+
+        // ContactService.saveContact (this.state.contact).then ( (response) => {
+        //         console.log ('contact saved...')    
+        //     }
+        // ) .catch ( (response) => {
+        //         console.log ('contact save failed...')    
+        //     }
+        // )
+    }
+
+    handleClickOnYes = () => {
+        console.log ('No')    
+
+    }
+
+    handleOnChange = (event) => {
         console.log ('object ' + event.target.name)
         console.log ('value ' + event.target.value)
         this.setState ({
@@ -168,8 +187,67 @@ class ContactForm extends Component {
         this.setState ({
             contact: { ...this.state.contact, country: country }
         })
-        console.log ('country ' + this.state.contact.countryId)
+        console.log ('country ' + this.state.contact.country.countryId)
     }
-}
 
+    handleStateOnChange = (event) => {
+        console.log ('object ' + event.target.name)
+        console.log ('value ' + event.target.value)
+
+        let state = this.state.contact.state
+
+        state.stateId = event.target.value
+
+        this.setState ({
+            contact: { ...this.state.contact, state: state }
+        })
+        console.log ('state ' + this.state.contact.state.stateId)
+    }    
+
+    handleRelationshipOnChange = (event) => {
+        console.log ('object ' + event.target.name)
+        console.log ('value ' + event.target.value)
+
+        let relationship = this.state.contact.relationship
+
+        relationship.relationshipId = event.target.value
+
+        this.setState ({
+            contact: { ...this.state.contact, relationship: relationship }
+        })
+        console.log ('relationship ' + this.state.contact.relationship.relationshipId)
+    }    
+
+    handleGroupOnChange = (event) => {
+        console.log ('object ' + event.target.name)
+        console.log ('value ' + event.target.value)
+
+        let group = this.state.contact.group
+
+        group.groupId = event.target.value
+
+        this.setState ({
+            contact: { ...this.state.contact, group: group }
+        })
+        console.log ('group ' + this.state.contact.group.groupId)
+    }   
+    
+    showConfirmDiag = () => {
+        $(this.modal).modal.show()
+    }
+
+    initialize = () => {
+        let user = this.state.contact.user
+        user.userId = AuthService.getLoggedInUserId()
+
+        let status = this.state.contact.status
+        status.statusId = 100
+
+        this.setState ({
+            contact: { ...this.state.contact, user: user },
+            contact: { ...this.state.contact, status: status }
+        })
+    }
+
+}
 export default ContactForm

@@ -9,6 +9,7 @@ import javax.persistence.*;
 public class Contact {
 
     @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column (name="contact_id")
     private long contactId;
 
@@ -67,6 +68,10 @@ public class Contact {
     @OneToOne
     @JoinColumn (name="user_id", referencedColumnName="user_id")
     private User user;
+
+    @OneToOne
+    @JoinColumn (name="status_id", referencedColumnName="status_id")
+    private Status status;
 
     public Contact() {
     }
@@ -215,6 +220,14 @@ public class Contact {
         this.user = user;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "Contact{" +
@@ -236,6 +249,7 @@ public class Contact {
                 ", relationship=" + relationship +
                 ", group=" + group +
                 ", user=" + user +
+                ", status=" + status +
                 '}';
     }
 }

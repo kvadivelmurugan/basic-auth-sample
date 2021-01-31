@@ -19,8 +19,9 @@ public class ContactResource {
         return contactService.getContactsByUserId(userId);
     }
 
-    @RequestMapping (method = RequestMethod.PUT, path = "/contacts", produces = "application/json")
-    public ResponseEntity  saveContact (Contact contact) {
+    @RequestMapping (method = RequestMethod.PUT, path = "/contacts", produces = "application/json", consumes = "application/json")
+    public ResponseEntity  saveContact (@RequestBody Contact contact) {
+        System.out.println ("saveContact " + contact);
         contactService.saveContact(contact);
         return ResponseEntity.ok (null);
     }

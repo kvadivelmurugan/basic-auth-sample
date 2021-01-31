@@ -18,7 +18,7 @@ class GroupComponent extends Component {
         return (
             <>
                 <label for="inputGroup">Group</label>
-                <select id="inputGroup" className="form-control" name={this.props.componentName} value={this.props.selectedGroup} onChange={this.props.onChangeMethod}>
+                <select id="inputGroup" className="form-control" name={this.props.componentName.groupId} value={this.props.selectedGroup.groupId} onChange={this.props.onChangeMethod}>
                     <option key="0" value="0">Choose a Group...</option>
                     {                            
                         this.state.GroupList.map ((Group) => {

@@ -10,35 +10,25 @@ class StateComponent extends Component {
         }
     }
 
-    componentDidMount () {
-        console.log ('state ...')
-        let countryId = this.props.countryId;
-
-        if (countryId) {
-            this.getStatesByCountry (countryId)
-        }
-    }
-
-    componentWillReceiveProps (props) {
+    componentWillReceiveProps (nextProps) {
         console.log ('componentWillReceiveProps....')
-        const {selectedCountry} = this.props
+        const {selectedCountry} = this.props.selectedCountry
 
-        console.log ('props param ' + props)
+        console.log ('props param ' + nextProps.selectedCountry)
 
         console.log ('this.props ' + this.props)
-        console.log ('props.selectedCountry ' + props.selectedCountry)
+        console.log ('props.selectedCountry ' + nextProps.selectedCountry)
         console.log ('this.props.selectedCountry ' + this.props.selectedCountry)
-        if (props.selectedCountry !== selectedCountry) {
-            this.getStatesByCountry (props.selectedCountry)
+        if (nextProps.selectedCountry !== this.props.selectedCountry) {
+            this.getStatesByCountry (nextProps.selectedCountry)
         }
-
     }
 
     render () {        
         return (
             <>                
                 <label for="inputState">State</label>
-                <select id="inputState" className="form-control" name={this.props.componentName} value={this.props.selectedState} onChange={this.props.onChangeMethod}>
+                <select id="inputState" className="form-control" name={this.props.componentName.stateId} value={this.props.selectedState.stateId} onChange={this.props.onChangeMethod}>
                     <option key="0" value="0">Choose a State...</option>
                     {                            
                         this.state.stateList.map ((state) => {

@@ -18,7 +18,7 @@ class CountryComponent extends Component {
         return (
             <>
                 <label for="inputCountry">Country</label>
-                <select id="inputCountry" className="form-control" name={this.props.componentName} value={this.props.selectedCountry} onChange={this.props.onChangeMethod}>
+                <select id="inputCountry" className="form-control" name={this.props.componentName.countryId} value={this.props.selectedCountry.countryId} onChange={this.props.onChangeMethod}>
                     <option key="0" value="0">Choose a Country...</option>
                     {                            
                         this.state.countryList.map ((country) => {

@@ -1,9 +1,9 @@
-import AuthService from '../services/AuthService'
 import GroupModel from './GroupModel'
 import RelationshipModel from './RelationshipModel'
 import CountryModel from './CountryModel'
 import StateModel from './StateModel'
-
+import UserModel from './UserModel'
+import StatusModel from './StatusModel'
 
 const ContactModel = {
     contactId : '', 
@@ -23,8 +23,8 @@ const ContactModel = {
 	workPhone : '',
 	relationship : RelationshipModel,
 	group : GroupModel,	
-	status : '',
-	userId : AuthService.getLoggedInUserId()
+	status : StatusModel,
+	user : UserModel
 }
 
 export default ContactModel

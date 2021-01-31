@@ -102,8 +102,16 @@ INSERT into states VALUES(10007, 'NEWYORK', 10003);
 INSERT into states VALUES(10008, 'FLORIDA', 10003);
 INSERT into states VALUES(10009, 'CALIFORNIA', 10003);
 
+CREATE TABLE status (status_id BIGINT, 
+	status_name VARCHAR(50), 
+	PRIMARY KEY (status_id));
+	
+INSERT INTO status VALUES (100, 'ACTIVE');
+INSERT INTO status VALUES (101, 'BLOCKED');
+INSERT INTO status VALUES (102, 'DELETED');
+	
 CREATE TABLE contacts (
-	contact_id BIGINT, 
+	contact_id BIGINT AUTO_INCREMENT, 
 	nick_name VARCHAR(50) NOT NULL, 
 	first_name VARCHAR(50), 
 	last_name VARCHAR(50), 
@@ -120,9 +128,10 @@ CREATE TABLE contacts (
 	work_phone VARCHAR(15),
 	relationship_id BIGINT NOT NULL,
 	groupid BIGINT NOT NULL,
-	status CHAR(1),
+	status_id BIGINT,
 	user_id BIGINT,
 	PRIMARY KEY (contact_id),
+	FOREIGN KEY (status_id) references status (status_id),
 	FOREIGN KEY (state_id) references states (state_id),
 	FOREIGN KEY (country_id) references countries (country_id),
 	FOREIGN KEY (relationship_id) references relationships (relationship_id),
@@ -130,9 +139,12 @@ CREATE TABLE contacts (
 	FOREIGN KEY (user_id) references users (user_id)
 );
 
-INSERT into contacts VALUES (10000001, 'KVM', 'Vadivel Murugan', 'K', 'kvadivelmurugan@gmail.com', '', 'F3 SAI ENCLACE SOWMIYA NAGAR PERUMBAKKAM', '', 'CHENNAI', 10001, 10001, '600100', '+91-9X4XXXXXXX', '', '', 10001, 10001, 'A', 10003);
+ALTER TABLE contacts AUTO_INCREMENT = 10000001;
 
-INSERT into contacts VALUES (10000002, 'VISH', 'Vishwa', 'V', 'v.v@email.com', '', '#1, 1st MAIN ROAD, RAJA ANNAMALAIPURAM', '', 'CHENNAI', 10001, 10001, '600100', '+91-9X4XXXXXXX', '', '', 10001, 10001, 'A', 10003);
 
-INSERT into contacts VALUES (10000003, 'RAJ', 'RAJ MADHAVAN', 'K', 'rajm@india.com', '', '#100 VEYIL STREET SANTHOSAPURAM', '', 'CHENNAI', 10001, 10001, '600100', '+91-9X4XXXXXXX', '', '', 10001, 10001, 'A', 10001);
+INSERT into contacts (nick_name, first_name, last_name, personal_email, work_email, primary_address, secondary_address, city, state_id, country_id, zip, mobile, home_phone, work_phone, relationship_id, groupid, status_id, user_id) VALUES ('KVM', 'Vadivel Murugan', 'K', 'kvadivelmurugan@gmail.com', '', 'F3 SAI ENCLACE SOWMIYA NAGAR PERUMBAKKAM', '', 'CHENNAI', 10001, 10001, '600100', '+91-9X4XXXXXXX', '', '', 10001, 10001, 100, 10003);
+
+INSERT into contacts (nick_name, first_name, last_name, personal_email, work_email, primary_address, secondary_address, city, state_id, country_id, zip, mobile, home_phone, work_phone, relationship_id, groupid, status_id, user_id) VALUES ('VISH', 'Vishwa', 'V', 'v.v@email.com', '', '#1, 1st MAIN ROAD, RAJA ANNAMALAIPURAM', '', 'CHENNAI', 10001, 10001, '600100', '+91-9X4XXXXXXX', '', '', 10001, 10001, 100, 10003);
+
+INSERT into contacts (nick_name, first_name, last_name, personal_email, work_email, primary_address, secondary_address, city, state_id, country_id, zip, mobile, home_phone, work_phone, relationship_id, groupid, status_id, user_id) VALUES ('RAJ', 'RAJ MADHAVAN', 'K', 'rajm@india.com', '', '#100 VEYIL STREET SANTHOSAPURAM', '', 'CHENNAI', 10001, 10001, '600100', '+91-9X4XXXXXXX', '', '', 10001, 10001, 100, 10001);
 
