@@ -17,7 +17,7 @@ class RelationshipComponent extends Component {
     render () {
         return (
             <>
-                <label for="inputRelationship">Relationship</label>
+                <label for="inputRelationship">Relationship</label><span class="text-danger font-weight-bold required">*</span>
                 <select id="inputRelationship" className="form-control" name={this.props.componentName.relationshipId} value={this.props.selectedRelationship.relationshipId} onChange={this.props.onChangeMethod}>
                     <option key="0" value="0">Choose a Relationship...</option>
                     {                            

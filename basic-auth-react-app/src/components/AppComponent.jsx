@@ -12,6 +12,7 @@ import LoginComponent from './login/LoginComponent.jsx'
 import HomeComponent from './home/HomeComponent.jsx'
 import ContactForm from './contact/ContactForm.jsx'
 import ContactList from './contact/ContactList.jsx'
+import ContactConfirm from './contact/ContactConfirm.jsx'
 import ExpenseForm from './expense/ExpenseForm.jsx'
 import ExpenseList from './expense/ExpenseList.jsx'
 import EventForm from './event/EventForm.jsx'
@@ -35,8 +36,9 @@ class AppComponent extends Component {
                             <Route path="/" exact component={LoginComponent}  />                    
                             <Route path="/login" component={LoginComponent}  />                    
                             <AuthenticatedRoute path="/home" component={HomeComponent}  />                    
-                            <Route path="/contacts" exact component={ContactList} />                        
-                            <Route path="/contacts/add" component={ContactForm} />                            
+                            <AuthenticatedRoute path="/contacts" exact component={ContactList} />                        
+                            <AuthenticatedRoute path="/contacts/add" component={ContactForm} />     
+                            <AuthenticatedRoute path="/contacts/confirm" component={ContactConfirm} />                        
                             <AuthenticatedRoute path="/expenses" exact component={ExpenseList} />                        
                             <AuthenticatedRoute path="/expenses/add" component={ExpenseForm} />                            
                             <AuthenticatedRoute path="/events" exact component={EventList} />                        

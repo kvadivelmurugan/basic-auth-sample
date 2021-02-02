@@ -17,7 +17,7 @@ class GroupComponent extends Component {
     render () {
         return (
             <>
-                <label for="inputGroup">Group</label>
+                <label for="inputGroup">Group</label><span class="text-danger font-weight-bold required">*</span>
                 <select id="inputGroup" className="form-control" name={this.props.componentName.groupId} value={this.props.selectedGroup.groupId} onChange={this.props.onChangeMethod}>
                     <option key="0" value="0">Choose a Group...</option>
                     {                            

@@ -5,8 +5,8 @@ import CountryComponent from '../country/CountryComponent.jsx'
 import StateComponent from '../state/StateComponent.jsx'
 import RelationshipComponent from '../relationship/RelationshipComponent.jsx'
 import GroupComponent from '../group/GroupComponent.jsx'
-import ConfirmDialogComponent from '../../components/confirm_dialog/ConfirmDialogComponent.jsx'
 
+import ConfirmModalComponent from '../modal/ConfirmModalComponent.jsx'
 import ContactModel from '../../models/ContactModel'
 
 import AuthService from '../../services/AuthService'
@@ -18,7 +18,16 @@ class ContactForm extends Component {
         super(props)
 
         this.state = {
-            contact : ContactModel            
+            contact : ContactModel,
+            showConfirmModal : false,
+            showInfoModal : false,
+            errors : {
+                nickName : '',
+                personalEmail : '',
+                primaryAddress : '',
+                relationshipId : '',
+                groupId : ''
+            }        
         }              
     }
 
@@ -34,39 +43,39 @@ class ContactForm extends Component {
                     <p className="text-left">Contacts {">"} Add</p>
                 </div>
                 <div className="card-body">
-                    <form>
+                    <form autoComplete="off">
                         <div className="form-row">
                             <div className="form-group col-md-4">
-                                <label for="inputNickName4">Nick name</label>
+                                <label for="inputNickName4">Nick name</label><span class="text-danger font-weight-bold required">*</span>
                                 <input type="hidden" className="form-control" id="inputUserId" placeholder="userId" name="userId" value={this.state.contact.nickName}/>
-                                <input type="text" className="form-control" id="inputNickName4" placeholder="Nick name" name="nickName" value={this.state.contact.nickName} onChange={this.handleOnChange}/>
+                                <input type="text" autoComplete="off" className="form-control" id="inputNickName4" placeholder="Nick name" name="nickName" value={this.state.contact.nickName} onChange={this.handleOnChange}/>
                             </div>
                             <div className="form-group col-md-4">
                                 <label for="inputFirstname4">First name</label>
-                                <input type="text" className="form-control" id="inputFirstname4" placeholder="First name" name="firstName" value={this.state.contact.firstName} onChange={this.handleOnChange}/>
+                                <input type="text" autoComplete="off" className="form-control" id="inputFirstname4" placeholder="First name" name="firstName" value={this.state.contact.firstName} onChange={this.handleOnChange}/>
                             </div>
                             <div className="form-group col-md-4">
                                 <label for="inputLastname4">Last name</label>
-                                <input type="text" className="form-control" id="inputLastname4" placeholder="Last name" name="lastName" value={this.state.contact.lastName} onChange={this.handleOnChange}/>
+                                <input type="text" autoComplete="off" className="form-control" id="inputLastname4" placeholder="Last name" name="lastName" value={this.state.contact.lastName} onChange={this.handleOnChange}/>
                             </div>
                         </div>
                         <div className="form-row">
                             <div className="form-group col-md-6">
-                                <label for="inputPersonalEmail4">Personal Email</label>
-                                <input type="email" className="form-control" id="inputPersonalEmail4" placeholder="Primary Email" name="personalEmail" value={this.state.contact.personalEmail} onChange={this.handleOnChange}/>
+                                <label for="inputPersonalEmail4">Personal Email</label><span class="text-danger font-weight-bold required">*</span>
+                                <input type="email" autoComplete="off" className="form-control" id="inputPersonalEmail4" placeholder="Primary Email" name="personalEmail" value={this.state.contact.personalEmail} onChange={this.handleOnChange}/>
                             </div>
                             <div className="form-group col-md-6">
                                 <label for="inputWorkEmail4">Office Email</label>
-                                <input type="email" className="form-control" id="inputWorkEmail4" placeholder="Secondary Email" name="workEmail" value={this.state.contact.workEmail} onChange={this.handleOnChange}/>
+                                <input type="email" autoComplete="off" className="form-control" id="inputWorkEmail4" placeholder="Secondary Email" name="workEmail" value={this.state.contact.workEmail} onChange={this.handleOnChange}/>
                             </div>
                         </div>
                         <div className="form-group">
-                            <label for="inputAddress">Door# / Block# / Apartment Name</label>
-                            <input type="text" className="form-control" id="inputAddress" placeholder="Door# / Block# / Apartment Name" name="primaryAddress" value={this.state.contact.primaryAddress} onChange={this.handleOnChange}/>
+                            <label for="inputAddress">Door# / Block# / Apartment Name</label><span class="text-danger font-weight-bold required">*</span>
+                            <input type="text" autoComplete="off" className="form-control" id="inputAddress" placeholder="Door# / Block# / Apartment Name" name="primaryAddress" value={this.state.contact.primaryAddress} onChange={this.handleOnChange}/>
                         </div>
                         <div className="form-group">
-                            <label for="inputAddress2">Street Name / Area Name</label>
-                            <input type="text" className="form-control" id="inputAddress2" placeholder="Street Name / Area Name" name="secondaryAddress" value={this.state.contact.secondaryAddress} onChange={this.handleOnChange}/>
+                            <label for="inputAddress2">Street Name / Area Name</label><span class="text-danger font-weight-bold required">*</span>
+                            <input type="text" autoComplete="off" className="form-control" id="inputAddress2" placeholder="Street Name / Area Name" name="secondaryAddress" value={this.state.contact.secondaryAddress} onChange={this.handleOnChange}/>
                         </div>
                         <div className="form-row">
                             <div className="form-group col-md-3">
@@ -103,68 +112,51 @@ class ContactForm extends Component {
                             </div>
                             <div className="form-group col-md-4">
                                 <label for="inputCity">City</label>
-                                <input type="text" className="form-control" id="inputCity" placeholder="City Name" name="city" value={this.state.contact.city} onChange={this.handleOnChange}/>
+                                <input type="text" autoComplete="off" className="form-control" id="inputCity" placeholder="City Name" name="city" value={this.state.contact.city} onChange={this.handleOnChange}/>
                             </div>
                             
                             <div className="form-group col-md-2">
                                 <label for="inputZip">Zip</label>
-                                <input type="text" className="form-control" id="inputZip" name="zip" value={this.state.contact.zip} onChange={this.handleOnChange}/>
+                                <input type="text" autoComplete="off" className="form-control" id="inputZip" name="zip" value={this.state.contact.zip} onChange={this.handleOnChange}/>
                             </div>
                         </div>
                         <div className="form-row">
                             <div className="form-group col-md-2">
                                 <label for="inputMobile">Mobile #</label>
-                                <input type="text" className="form-control" id="inputMobile" name="mobile" value={this.state.contact.mobile} onChange={this.handleOnChange}/>
+                                <input type="text" autoComplete="off" className="form-control" id="inputMobile" name="mobile" value={this.state.contact.mobile} onChange={this.handleOnChange}/>
                             </div>
                             <div className="form-group col-md-2">
                                 <label for="inputHome">Home #</label>
-                                <input type="text" className="form-control" id="inputHome" name="homePhone" value={this.state.contact.homePhone} onChange={this.handleOnChange}/>
+                                <input type="text" autoComplete="off" className="form-control" id="inputHome" name="homePhone" value={this.state.contact.homePhone} onChange={this.handleOnChange}/>
                             </div>
                             <div className="form-group col-md-2">
                                 <label for="inputWork">Work #</label>
-                                <input type="text" className="form-control" id="inputWork" name="workPhone" value={this.state.contact.workPhone} onChange={this.handleOnChange}/>                                
+                                <input type="text" autoComplete="off" className="form-control" id="inputWork" name="workPhone" value={this.state.contact.workPhone} onChange={this.handleOnChange}/>                                
                             </div>
                             <div className="form-group col-md-3">
-                                <RelationshipComponent componentName="relationship" selectedRelationship={this.state.contact.relationship} onChangeMethod={this.handleRelationshipOnChange} /> 
+                                <RelationshipComponent autoComplete="off" componentName="relationship" selectedRelationship={this.state.contact.relationship} onChangeMethod={this.handleRelationshipOnChange} /> 
                             </div>
                             <div className="form-group col-md-3">
-                                <GroupComponent componentName="group" selectedGroup={this.state.contact.group} onChangeMethod={this.handleGroupOnChange} /> 
+                                <GroupComponent autoComplete="off" componentName="group" selectedGroup={this.state.contact.group} onChangeMethod={this.handleGroupOnChange} /> 
                             </div>                                                       
 
                         </div>                        
                         <div className="form-row">
                         </div>
-                        <button type="button" className="btn btn-primary" onClick={this.showConfirmDiag}>Submit</button> &nbsp;
+                        <button type="button" className="btn btn-primary" onClick={this.showConfirmDialog} data-toggle="modal" data-target="#confirmModal">Submit</button> &nbsp;
                         <button type="button" className="btn btn-primary">Reset</button> &nbsp;
                         <button type="button" className="btn btn-primary" onClick={this.handleClickOnBack}>Back</button>
                     </form>
+
+                    <ConfirmModalComponent handleOnClickYes={this.handleClickOnYes} handleOnClickNo={this.handleClickOnNo}/>
                 </div>                
             </div>
         )
     }
-
+    
     handleClickOnBack = () => {
         this.props.history.push ("/contacts")
         console.log (this.state.contact)    
-    }
-
-    handleClickOnYes = () => {
-        console.log ('Yes')    
-
-        this.modal.modal()
-
-        // ContactService.saveContact (this.state.contact).then ( (response) => {
-        //         console.log ('contact saved...')    
-        //     }
-        // ) .catch ( (response) => {
-        //         console.log ('contact save failed...')    
-        //     }
-        // )
-    }
-
-    handleClickOnYes = () => {
-        console.log ('No')    
-
     }
 
     handleOnChange = (event) => {
@@ -232,11 +224,92 @@ class ContactForm extends Component {
         console.log ('group ' + this.state.contact.group.groupId)
     }   
     
-    showConfirmDiag = () => {
-        $(this.modal).modal.show()
+    showConfirmDialog = (event) => {
+        console.log ('showConfirm')
+        event.preventDefault()
+        if (this.isValidForm()) {
+            this.setState ( {
+                showConfirmModal : !this.state.showConfirmModal
+            })
+        }
+    }
+
+    isValidForm = () => {
+        
+        let isValid = true;
+        let errors = this.state.errors
+
+        let contact = this.state.contact
+
+        console.log ('this.state.contact.nickName ' + this.state.contact.nickName)
+        if (contact.nickName.length <= 0) {
+            isValid = false
+            errors.nickName = 'Please enter Nick Name'
+        }
+
+        if (this.state.contact.personalEmail.length <= 0) {
+            isValid = false
+            errors.personalEmail = 'Please enter Personal Email'
+        }
+
+        if (this.state.contact.primaryAddress.length <= 0) {
+            isValid = false
+            errors.primaryAddress = 'Please enter Primary Address'
+        }
+
+        if (this.state.contact.relationshipId === 0) {
+            isValid = false
+            errors.relationshipId = 'Please choose the Relationship'
+        }
+
+        if (this.state.contact.groupId === 0) {
+            isValid = false
+            errors.groupId = 'Please choose the Group'
+        }
+        console.log ('isValid ' + isValid)
+        this.setState ({
+            errors: errors
+        })
+        
+        return isValid
+    }
+
+    handleClickOnYes = () => {
+        console.log ('Yes')    
+        ContactService.saveContact (this.state.contact)
+            .then ((response) => {
+                console.log ('contact saved...') 
+                this.props.history.push ('/contacts/confirm')
+            }) 
+            .catch ( (response) => {
+                console.log ('contact save failed...')    
+            })
+    }
+
+    handleClickOnNo = () => {
+        console.log ('No')    
+
+    }
+
+    handleClickOnYes = () => {
+        console.log ('Yes')    
+        ContactService.saveContact (this.state.contact).then ( (response) => {
+                console.log ('contact saved...')  
+                this.props.history.push ("/contacts/confirm")  
+            }
+        ) .catch ( (response) => {
+                console.log ('contact save failed...')    
+            }
+        )
+    }
+
+    handleOnClickClose = () => {
+        console.log ('No')    
+
     }
 
     initialize = () => {
+        console.log ('pre-initialize ' + this.state.contact)
         let user = this.state.contact.user
         user.userId = AuthService.getLoggedInUserId()
 

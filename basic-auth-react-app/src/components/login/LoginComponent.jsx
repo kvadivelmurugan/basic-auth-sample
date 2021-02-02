@@ -13,7 +13,11 @@ class LoginComponent extends Component {
         this.state = {
             email: '',
             password: '',
-            errorMessage: ''
+            errorMessage: '',
+            errors : {
+                email: '',
+                password: ''
+            }
         }
     }
 
@@ -21,8 +25,6 @@ class LoginComponent extends Component {
         return (
             <>
                 <div>
-                    <br></br>
-                    <br></br>
                     <br></br>
                     <br></br>
                     <br></br>
@@ -41,14 +43,16 @@ class LoginComponent extends Component {
                         <form>
                             
                             <div className="form-group">
-                                <label for="inputEmail">Email</label>
-                                <input type="text" className="form-control" id="inputEmail" placeholder="Email" name="email" value={this.state.email} onChange={this.handleOnChange}/>
+                                <label for="inputEmail" >Email</label><span class="text-danger font-weight-bold required">*</span>
+                                <input type="text" autoComplete="off" className="form-control" id="inputEmail" placeholder="Email" name="email" value={this.state.email} onChange={this.handleOnChange}/>
+                                <p class="text-danger">{this.state.errors.email}</p>
                             </div>
                         
                         
                             <div className="form-group">
-                                <label for="inputPassword">Password</label>
-                                <input type="Password" className="form-control" id="inputPassword" placeholder="Password" name="password" value={this.state.password} onChange={this.handleOnChange}/>
+                                <label for="inputPassword">Password</label><span class="text-danger font-weight-bold required">*</span>
+                                <input type="Password" autoComplete="off" className="form-control" id="inputPassword" placeholder="Password" name="password" value={this.state.password} onChange={this.handleOnChange}/>
+                                <p class="text-danger">{this.state.errors.password}</p>
                             </div>
                             
                             
@@ -64,24 +68,50 @@ class LoginComponent extends Component {
         )
     }
 
-    handleClickOfLogin () {
-        AuthService.doBasicAuth (this.state.email, this.state.password)
-            .then((response) => {
-                console.log ('auth success' + response.data.userId)
-                AuthService.registerLogin (this.state.email, this.state.password, response.data.userId)
-                this.props.history.push ("/home")
-            }).catch(
-            (error) => {
-                this.setState ({
-                    errorMessage : ErrorHandlerService.handleError (error) 
+    handleClickOfLogin (event) {
+        event.preventDefault()
+
+        if (this.isValidForm()) {
+            AuthService.doBasicAuth (this.state.email, this.state.password)
+                .then((response) => {
+                    console.log ('auth success' + response.data.userId)
+                    AuthService.registerLogin (this.state.email, this.state.password, response.data.userId)
+                    this.props.history.push ("/home")
+                }).catch(
+                (error) => {
+                    this.setState ({
+                        errorMessage : ErrorHandlerService.handleError (error) 
+                    })
                 })
-            })
+        }
     }
 
     handleOnChange (event) {
         this.setState ({
             [event.target.name] : event.target.value
         })
+    }
+
+    isValidForm = () => {
+        let isValid = true;
+        let errors = this.state.errors
+
+        console.log (this.state.email)
+        if (this.state.email.length <= 0) {
+            isValid = false
+            errors.email = 'Please enter email'
+        }
+        
+        if (this.state.password.length < 4) {
+            isValid = false
+            errors.password = 'Please enter password'
+        }
+
+        this.setState ({
+            errors: errors
+        })
+        console.log (isValid)
+        return isValid;
     }
 }
 
