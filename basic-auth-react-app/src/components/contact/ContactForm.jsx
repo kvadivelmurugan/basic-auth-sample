@@ -20,13 +20,13 @@ class ContactForm extends Component {
         this.state = {
             contact : ContactModel,
             showConfirmModal : false,
-            showInfoModal : false,
+            isValid : false,
             errors : {
                 nickName : '',
                 personalEmail : '',
                 primaryAddress : '',
-                relationshipId : '',
-                groupId : ''
+                relationship : '',
+                group : ''
             }        
         }              
     }
@@ -49,6 +49,7 @@ class ContactForm extends Component {
                                 <label for="inputNickName4">Nick name</label><span class="text-danger font-weight-bold required">*</span>
                                 <input type="hidden" className="form-control" id="inputUserId" placeholder="userId" name="userId" value={this.state.contact.nickName}/>
                                 <input type="text" autoComplete="off" className="form-control" id="inputNickName4" placeholder="Nick name" name="nickName" value={this.state.contact.nickName} onChange={this.handleOnChange}/>
+                                <p class="text-danger">{this.state.errors.nickName}</p>
                             </div>
                             <div className="form-group col-md-4">
                                 <label for="inputFirstname4">First name</label>
@@ -63,6 +64,7 @@ class ContactForm extends Component {
                             <div className="form-group col-md-6">
                                 <label for="inputPersonalEmail4">Personal Email</label><span class="text-danger font-weight-bold required">*</span>
                                 <input type="email" autoComplete="off" className="form-control" id="inputPersonalEmail4" placeholder="Primary Email" name="personalEmail" value={this.state.contact.personalEmail} onChange={this.handleOnChange}/>
+                                <p class="text-danger">{this.state.errors.personalEmail}</p>
                             </div>
                             <div className="form-group col-md-6">
                                 <label for="inputWorkEmail4">Office Email</label>
@@ -72,10 +74,12 @@ class ContactForm extends Component {
                         <div className="form-group">
                             <label for="inputAddress">Door# / Block# / Apartment Name</label><span class="text-danger font-weight-bold required">*</span>
                             <input type="text" autoComplete="off" className="form-control" id="inputAddress" placeholder="Door# / Block# / Apartment Name" name="primaryAddress" value={this.state.contact.primaryAddress} onChange={this.handleOnChange}/>
+                            <p class="text-danger">{this.state.errors.primaryAddress}</p>
                         </div>
                         <div className="form-group">
                             <label for="inputAddress2">Street Name / Area Name</label><span class="text-danger font-weight-bold required">*</span>
                             <input type="text" autoComplete="off" className="form-control" id="inputAddress2" placeholder="Street Name / Area Name" name="secondaryAddress" value={this.state.contact.secondaryAddress} onChange={this.handleOnChange}/>
+                            <p class="text-danger">{this.state.errors.secondaryAddress}</p>
                         </div>
                         <div className="form-row">
                             <div className="form-group col-md-3">
@@ -134,16 +138,16 @@ class ContactForm extends Component {
                                 <input type="text" autoComplete="off" className="form-control" id="inputWork" name="workPhone" value={this.state.contact.workPhone} onChange={this.handleOnChange}/>                                
                             </div>
                             <div className="form-group col-md-3">
-                                <RelationshipComponent autoComplete="off" componentName="relationship" selectedRelationship={this.state.contact.relationship} onChangeMethod={this.handleRelationshipOnChange} /> 
+                                <RelationshipComponent autoComplete="off" componentName="relationship" selectedRelationship={this.state.contact.relationship} onChangeMethod={this.handleRelationshipOnChange} isError={this.state.errors.relationship}/> 
                             </div>
                             <div className="form-group col-md-3">
-                                <GroupComponent autoComplete="off" componentName="group" selectedGroup={this.state.contact.group} onChangeMethod={this.handleGroupOnChange} /> 
+                                <GroupComponent autoComplete="off" componentName="group" selectedGroup={this.state.contact.group} onChangeMethod={this.handleGroupOnChange} isError={this.state.errors.group}/> 
                             </div>                                                       
 
                         </div>                        
                         <div className="form-row">
                         </div>
-                        <button type="button" className="btn btn-primary" onClick={this.showConfirmDialog} data-toggle="modal" data-target="#confirmModal">Submit</button> &nbsp;
+                        <button type="button" className="btn btn-primary" onClick={this.showConfirmDialog} data-target={this.state.isValid ? "#confirmModal" : undefined} data-toggle='modal'  >Submit</button> &nbsp;
                         <button type="button" className="btn btn-primary">Reset</button> &nbsp;
                         <button type="button" className="btn btn-primary" onClick={this.handleClickOnBack}>Back</button>
                     </form>
@@ -237,37 +241,46 @@ class ContactForm extends Component {
     isValidForm = () => {
         
         let isValid = true;
-        let errors = this.state.errors
+
+        let errors = {
+            nickName : '',
+            personalEmail : '',
+            primaryAddress : '',
+            relationship : '',
+            group : ''
+        }
 
         let contact = this.state.contact
 
         console.log ('this.state.contact.nickName ' + this.state.contact.nickName)
-        if (contact.nickName.length <= 0) {
+        if (!contact.nickName) {
             isValid = false
             errors.nickName = 'Please enter Nick Name'
         }
 
-        if (this.state.contact.personalEmail.length <= 0) {
+        if (!this.state.contact.personalEmail) {
             isValid = false
             errors.personalEmail = 'Please enter Personal Email'
         }
 
-        if (this.state.contact.primaryAddress.length <= 0) {
+        if (!this.state.contact.primaryAddress) {
             isValid = false
             errors.primaryAddress = 'Please enter Primary Address'
         }
 
-        if (this.state.contact.relationshipId === 0) {
+        if (!this.state.contact.relationship.relationshipId) {
             isValid = false
-            errors.relationshipId = 'Please choose the Relationship'
+            errors.relationship = 'Please choose the Relationship'
         }
 
-        if (this.state.contact.groupId === 0) {
+        console.log ('this.state.contact.group.groupId  ' + this.state.contact.group.groupId )
+        if (!   this.state.contact.group.groupId) {
             isValid = false
-            errors.groupId = 'Please choose the Group'
+            errors.group = 'Please choose the Group'
         }
         console.log ('isValid ' + isValid)
         this.setState ({
+            isValid : isValid,
             errors: errors
         })
         
@@ -315,11 +328,11 @@ class ContactForm extends Component {
 
         let status = this.state.contact.status
         status.statusId = 100
-
+          
         this.setState ({
             contact: { ...this.state.contact, user: user },
             contact: { ...this.state.contact, status: status }
-        })
+        }) 
     }
 
 }

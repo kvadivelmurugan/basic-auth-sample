@@ -27,7 +27,8 @@ class GroupComponent extends Component {
                             )
                         })
                     }
-                </select>               
+                </select>    
+                <p class="text-danger">{this.props.isError}</p>           
             </>
         )
     }

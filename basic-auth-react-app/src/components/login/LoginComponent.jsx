@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
-
+import React, { Component, useContext } from 'react'
+import { UserContext } from '../../contexts/UserContext.js'
 import ErrorHandlerService from '../../services/ErrorHandlerService.js'
 import AuthService from '../../services/AuthService.js'
 
 class LoginComponent extends Component {
+
     constructor(props) {
         super(props)
 
@@ -20,6 +21,8 @@ class LoginComponent extends Component {
             }
         }
     }
+
+    static contextType = UserContext;
 
     render() {
         return (
@@ -70,12 +73,15 @@ class LoginComponent extends Component {
 
     handleClickOfLogin (event) {
         event.preventDefault()
-
+        
         if (this.isValidForm()) {
             AuthService.doBasicAuth (this.state.email, this.state.password)
                 .then((response) => {
                     console.log ('auth success' + response.data.userId)
-                    AuthService.registerLogin (this.state.email, this.state.password, response.data.userId)
+                    console.log ('ROLE ' + response.data.roleList[0].roleName)
+                    //AuthService.registerLogin (this.state.email, this.state.password, response.data.userId, response.data.roleList[0].roleName)
+                    AuthService.registerLogin (true, response.data)
+                    this.context.registerLogin (true, response.data)
                     this.props.history.push ("/home")
                 }).catch(
                 (error) => {

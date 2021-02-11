@@ -1,8 +1,9 @@
 import axios from "axios"
 
 import api from "./_api.js"
-
+import RoleModel from './../models/RoleModel'
 class AuthService {
+
     doBasicAuth (userName, password) {
         console.log (userName + " " + password)
 
@@ -19,7 +20,11 @@ class AuthService {
             })
     }
 
-    registerLogin (userName, password, userId) {
+    getRoles (userName) {
+        return api.get (`roles/${userName}`)
+    }
+
+    registerLogin (userName, password, userId, roleName) {
         console.log ('registerLogin called...')
         sessionStorage.setItem('userName', userName)
         sessionStorage.setItem('userId', userId)
@@ -27,6 +32,18 @@ class AuthService {
         let authHeader = this.getAuthHeader(userName, password)
         sessionStorage.setItem('authHeader', authHeader)
         //this.setupAxiosInterceptorForRequest (authHeader)
+    }
+
+    registerLogin (flag, user) {
+        console.log ('registerLogin called...')
+        sessionStorage.setItem('userName', user.userName)
+        sessionStorage.setItem('userId', user.userId)
+
+        let authHeader = this.getAuthHeader(user.userName, user.password)
+        sessionStorage.setItem('authHeader', authHeader)
+        //this.setupAxiosInterceptorForRequest (authHeader)
+        sessionStorage.setItem ('isAuthenticated', flag)
+        sessionStorage.setItem ('user', JSON.stringify(user))
     }
 
     setupAxiosInterceptorForRequest (authHeader) {
@@ -45,10 +62,16 @@ class AuthService {
         sessionStorage.removeItem('userName')
         sessionStorage.removeItem('userId')
         sessionStorage.removeItem('authHeader')
+        sessionStorage.removeItem('user')
+        sessionStorage.removeItem ('isAuthenticated')
     } 
 
     getLoggedInUserName() {
         return sessionStorage.getItem ('userName');
+    }
+
+    getLoggedInUserRoleName() {
+        return sessionStorage.getItem ('roleName');
     }
 
     getLoggedInUserId() {

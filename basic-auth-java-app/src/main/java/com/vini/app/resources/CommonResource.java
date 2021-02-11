@@ -1,10 +1,8 @@
 package com.vini.app.resources;
 
-import com.vini.app.model.Country;
-import com.vini.app.model.Group;
-import com.vini.app.model.Relationship;
-import com.vini.app.model.State;
+import com.vini.app.model.*;
 import com.vini.app.services.CommonService;
+import com.vini.app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +16,9 @@ public class CommonResource {
 
     @Autowired
     private CommonService commonService;
+
+    @Autowired
+    UserService userService;
 
     @RequestMapping (method = RequestMethod.GET, path = "/states/{countryId}", produces = "application/json")
     public List<State> getStatesByCountryId (@PathVariable ("countryId") long countryId) {
@@ -37,6 +38,14 @@ public class CommonResource {
     @RequestMapping (method = RequestMethod.GET, path = "/groups", produces = "application/json")
     public List<Group> getGroups () {
         return commonService.getGroups();
+    }
+
+    @RequestMapping (method = RequestMethod.GET, path = "/roles/{userName}", produces = "application/json")
+    public List<Role> getRoles (@PathVariable ("userName") String userName) {
+        System.out.println("getRoles :: userName " + userName);
+        User user = userService.findByUserName(userName);
+        System.out.println("getRoles :: user " + user);
+        return user.getRoleList();
     }
 
 }
