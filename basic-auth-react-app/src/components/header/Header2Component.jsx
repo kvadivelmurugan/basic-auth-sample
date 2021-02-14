@@ -16,36 +16,24 @@ import './HeaderComponent.css'
 class Header2Component extends Component {
     static contextType = UserContext;
 
-
-    state = {
-        isUserAuthenticated: this.context.isAuthenticated,
-        loggedInUserId: this.context.loggedInUserId,
-        loggedInUserName: this.context.loggedInUserName,
-        roles: this.context.roles
-    }
+    // state = {
+    //     isUserAuthenticated: this.context.isAuthenticated,
+    //     loggedInUserId: this.context.loggedInUserId,
+    //     loggedInUserName: this.context.loggedInUserName,
+    //     roles: this.context.roles
+    // }
 
     componentDidMount () {
         console.log ('componentDidMount...')
-        //this.initialize ()  
+        this.initialize()
     }
 
     onClickLogout = this.onClickLogout.bind(this)
 
-   
-
-    initialize = () => {
-        this.setState ({
-            isUserAuthenticated: this.context.isAuthenticated,
-            loggedInUserId: this.context.loggedInUserId,
-            loggedInUserName: this.context.loggedInUserName,
-            roles: this.context.roles
-        })
-        console.log ('...initialized...')
-    }
-
     render () {
         console.log ('...render...')
         const isUserAuthenticated = this.context.isAuthenticated
+        const loggedInUserName = this.context.loggedInUserName
         console.log (' isUserAuthenticated :: ' + isUserAuthenticated)
         console.log (' loggedInUserName :: ' + this.context.loggedInUserName)
         
@@ -57,8 +45,6 @@ class Header2Component extends Component {
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
-                
-                <span class="navbar-text"></span>
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
                 
                     <ul className="navbar-nav">
@@ -80,7 +66,6 @@ class Header2Component extends Component {
                     </ul>
                     
                     {isUserAuthenticated && <ul className="nav ml-auto">
-                        
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Profile
@@ -95,9 +80,7 @@ class Header2Component extends Component {
                     </ul>}
                 </div>
             </nav>
-
         )
-       
     }
 
     onClickLogout () {
@@ -107,15 +90,6 @@ class Header2Component extends Component {
             roleList :[]
         }
         this.props.history.push ('/login')
-    }
-
-    getRoles = () => {
-        AuthService.getRoles(this.context.loggedInUserName)
-        .then((response)=> {
-            this.setState ({
-                roleList: response.data   
-            })
-        }).catch()
     }
 
     hasRole = (roleName) => {
@@ -132,8 +106,17 @@ class Header2Component extends Component {
                 }
             }
         )
-
         return isValid
+    }
+
+    initialize = () => {
+        this.setState ({
+            isUserAuthenticated: this.context.isAuthenticated,
+            loggedInUserId: this.context.loggedInUserId,
+            loggedInUserName: this.context.loggedInUserName,
+            roles: this.context.roles
+        })
+        console.log ('...initialized...')
     }
 }
 

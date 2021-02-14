@@ -26,13 +26,14 @@ import AuthenticatedRoute from './AuthenticatedRoute.jsx'
 
 class AppComponent extends Component {
     constructor (props) {
+        console.log ('constructor...')
         super (props)
 
         this.state = {
-            isAuthenticated : false,
-            loggedInUserId: '',
-            loggedInUserName: '', 
-            roles: [],
+            isAuthenticated : this.isUserAuthenticated(),
+            loggedInUserId: this.getLoggedInUserId(),
+            loggedInUserName: this.getLoggedInUserName(), 
+            roles: this.getLoggedInUserRoles()
         }
     }
 
@@ -42,15 +43,8 @@ class AppComponent extends Component {
         this.initialize ()
     }
 
-    initialize = () => {
-        let isAuthenticated = sessionStorage.getItem ('isAuthenticated') 
-        if (isAuthenticated) {
-            let user = JSON.parse (sessionStorage.getItem ('user'))
-            this.init (isAuthenticated, user)
-        }
-    }
-
     render () {
+        console.log ('render...')
         return (
             <UserContext.Provider value= {{isAuthenticated: this.state.isAuthenticated, loggedInUserId: this.state.loggedInUserId, loggedInUserName: this.state.loggedInUserName, roles: this.state.roles, registerLogin : this.registerLogin}}>
                 <div className="container-fluid">
@@ -62,9 +56,9 @@ class AppComponent extends Component {
                             <Switch>
                                 <Route path="/" exact component={LoginComponent}  />                    
                                 <Route path="/login" component={LoginComponent} />                    
-                                <AuthenticatedRoute path="/home" component={HomeComponent}  />                    
-                                <AuthenticatedRoute path="/contacts" exact component={ContactList} />                        
-                                <AuthenticatedRoute path="/contacts/add" component={ContactForm} />     
+                                <AuthenticatedRoute path="/home" component={HomeComponent}  isAuthenticated={this.state.isAuthenticated}/>                    
+                                <AuthenticatedRoute path="/contacts" exact component={ContactList} isAuthenticated={this.state.isAuthenticated}/>                        
+                                <AuthenticatedRoute path="/contacts/add" component={ContactForm} isAuthenticated={this.state.isAuthenticated}/>     
                                 <AuthenticatedRoute path="/contacts/confirm" component={ContactConfirm} />                        
                                 <AuthenticatedRoute path="/expenses" exact component={ExpenseList} />                        
                                 <AuthenticatedRoute path="/expenses/add" component={ExpenseForm} />                            
@@ -80,6 +74,25 @@ class AppComponent extends Component {
         )
     }
 
+    initialize = () => {
+        let isAuthenticated = sessionStorage.getItem ('isAuthenticated') 
+        if (isAuthenticated) {
+            let user = JSON.parse (sessionStorage.getItem ('user'))
+            this.init (isAuthenticated, user)
+        } else {
+            this.initWithDefaultValue ()
+        }
+    }
+
+    isUserAuthenticated = () => {
+        let authHeader = sessionStorage.getItem ('authHeader')
+        console.log (authHeader)
+        if (authHeader) {
+            return true
+        }
+        return false
+    }
+    
     registerLogin = (isAuthenticated, user) => {
         console.log (' App registerLogin ' + isAuthenticated + ' : ' + user.userId)
         this.init (isAuthenticated, user)
@@ -93,6 +106,43 @@ class AppComponent extends Component {
             loggedInUserName: user.userName, 
             roles: user.roleList
         })
+    }
+
+    initWithDefaultValue = () => {
+        console.log (' initWithDefaultValuet called....')
+        this.setState ({
+            isAuthenticated : false,
+            loggedInUserId: '',
+            loggedInUserName: '', 
+            roles: []
+        })
+    }
+
+    getLoggedInUserId = () => {
+        if (this.isUserAuthenticated()) {
+            let user = JSON.parse (sessionStorage.getItem ('user'))
+            return user.userId
+        } else {
+            return ''
+        }
+    }
+
+    getLoggedInUserName = () => {
+        if (this.isUserAuthenticated()) {
+            let user = JSON.parse (sessionStorage.getItem ('user'))
+            return user.userName;
+        } else {
+            return ''
+        }
+    }
+
+    getLoggedInUserRoles = () => {
+        if (this.isUserAuthenticated()) {
+            let user = JSON.parse (sessionStorage.getItem ('user'))
+            return user.roleList;
+        } else {
+            return []
+        }
     }
 }
 
