@@ -2,13 +2,15 @@
 import React, { Component } from 'react'
 import AuthService from '../../services/AuthService'
 import ContactService from './ContactService'
+import ErrorHanlderComponent from '../common/ErrorHandlerComponent'
 
 class ContactList extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            contactList : []
+            contactList : [],
+            error : ''
         }
 
         this.handleClickOfAddContact = this.handleClickOfAddContact.bind(this)
@@ -28,38 +30,50 @@ class ContactList extends Component {
                 <div className="card-header bg-transparent">
                     <h4>Contacts</h4>
                     <p className="text-left">Contacts {">"} List</p>
+                    {this.state.error && <ErrorHanlderComponent error = {this.state.error}/>}
                 </div>
                 <div className="card-body">
-                    <form>
-                        <div className="form-row">
-                            <div className="form-group col-md-2">
-                                <label for="inputName4">Name</label>
-                                <input type="text" className="form-control" id="inputName4" placeholder="Name" />
-                            </div>
-                            <div className="form-group col-md-2">
-                                <label for="inputEmail4">Email</label>
-                                <input type="email" className="form-control" id="inputEmail4" placeholder="Email" />
-                            </div>
-                            <div className="form-group col-md-2">
-                                <label for="inputMobile">Mobile #</label>
-                                <input type="text" className="form-control" id="inputMobile" />
-                            </div>
-
-                            <div className="form-group col-md-1">
-                                <label for="btnSubmit">&nbsp;</label>
-                                <button type="button" className="form-control btn btn-primary">Submit</button> &nbsp;
-                            </div>
-                            <div className="form-group col-md-1">
-                                <label for="btnReset">&nbsp;</label>
-                                <button type="reset" className="form-control btn btn-primary">Reset</button> &nbsp;
-                            </div>
-                            <div className="form-group col-md-1 ml-auto ">
-                                <label for="btnAddContact">&nbsp;</label>
-                                <button type="button" className="btn btn-primary text-nowrap" onClick={this.handleClickOfAddContact}>Add Contact</button>
-                            </div>
+                    <div className="row">
+                        <div class="col-md-10">
+                            <p>
+                                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    Search
+                                </a>
+                            </p>
                         </div>
-                    </form>
+                        <div class="col-md-2 text-right">
+                            <label for="btnAddContact">&nbsp;</label>
+                            <button type="button" className="btn btn-primary text-nowrap" onClick={this.handleClickOfAddContact}>Add Contact</button>
+                        </div>
+                    </div>
+                    <div class="collapse" id="collapseExample">
+                        <form>
+                            <div className="form-row">
+                                <div className="form-group col-md-2">
+                                    <label for="inputName4">Name</label>
+                                    <input type="text" className="form-control" id="inputName4" placeholder="Name" />
+                                </div>
+                                <div className="form-group col-md-2">
+                                    <label for="inputEmail4">Email</label>
+                                    <input type="email" className="form-control" id="inputEmail4" placeholder="Email" />
+                                </div>
+                                <div className="form-group col-md-2">
+                                    <label for="inputMobile">Mobile #</label>
+                                    <input type="text" className="form-control" id="inputMobile" />
+                                </div>
 
+                                <div className="form-group col-md-1">
+                                    <label for="btnSubmit">&nbsp;</label>
+                                    <button type="button" className="form-control btn btn-primary">Submit</button> &nbsp;
+                                </div>
+                                <div className="form-group col-md-1">
+                                    <label for="btnReset">&nbsp;</label>
+                                    <button type="reset" className="form-control btn btn-primary">Reset</button> &nbsp;
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
                     <table className="table">
                         <thead className="table-primary">
                             <tr>
@@ -109,7 +123,9 @@ class ContactList extends Component {
                 contactList : response.data
             })
         }).catch ((error) => {
-
+            this.setState ({
+                error : error
+            }) 
         })
     }
 }

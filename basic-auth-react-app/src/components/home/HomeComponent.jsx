@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Header2Component from '../header/Header2Component'
 
 import './HomeComponent.css'
 

@@ -9,7 +9,7 @@ import {BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import { UserContext } from '../contexts/UserContext.js'
 
-import Header2Component from './header/Header2Component.jsx'
+import HeaderComponent from './header/HeaderComponent.jsx'
 import LoginComponent from './login/LoginComponent.jsx'
 import HomeComponent from './home/HomeComponent.jsx'
 import ContactForm from './contact/ContactForm.jsx'
@@ -51,7 +51,7 @@ class AppComponent extends Component {
                     
                     <Router>
                         <>
-                            <Header2Component />
+                            <HeaderComponent />
                             
                             <Switch>
                                 <Route path="/" exact component={LoginComponent}  />                    
@@ -59,13 +59,13 @@ class AppComponent extends Component {
                                 <AuthenticatedRoute path="/home" component={HomeComponent}  isAuthenticated={this.state.isAuthenticated}/>                    
                                 <AuthenticatedRoute path="/contacts" exact component={ContactList} isAuthenticated={this.state.isAuthenticated}/>                        
                                 <AuthenticatedRoute path="/contacts/add" component={ContactForm} isAuthenticated={this.state.isAuthenticated}/>     
-                                <AuthenticatedRoute path="/contacts/confirm" component={ContactConfirm} />                        
-                                <AuthenticatedRoute path="/expenses" exact component={ExpenseList} />                        
-                                <AuthenticatedRoute path="/expenses/add" component={ExpenseForm} />                            
-                                <AuthenticatedRoute path="/events" exact component={EventList} />                        
-                                <AuthenticatedRoute path="/events/add" component={EventForm} />    
-                                <AuthenticatedRoute path="/notes" exact component={NoteList} />                        
-                                <AuthenticatedRoute path="/notes/add" component={NoteForm} />                            
+                                <AuthenticatedRoute path="/contacts/confirm" component={ContactConfirm} isAuthenticated={this.state.isAuthenticated}/>                        
+                                <AuthenticatedRoute path="/expenses" exact component={ExpenseList} isAuthenticated={this.state.isAuthenticated}/>                        
+                                <AuthenticatedRoute path="/expenses/add" component={ExpenseForm} isAuthenticated={this.state.isAuthenticated}/>                            
+                                <AuthenticatedRoute path="/events" exact component={EventList} isAuthenticated={this.state.isAuthenticated}/>                        
+                                <AuthenticatedRoute path="/events/add" component={EventForm} isAuthenticated={this.state.isAuthenticated}/>    
+                                <AuthenticatedRoute path="/notes" exact component={NoteList} isAuthenticated={this.state.isAuthenticated}/>                        
+                                <AuthenticatedRoute path="/notes/add" component={NoteForm} isAuthenticated={this.state.isAuthenticated}/>                            
                             </Switch>
                         </>
                     </Router>

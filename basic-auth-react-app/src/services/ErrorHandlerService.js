@@ -5,7 +5,7 @@ class ErrorHandlerService {
         }
 
         if (error.response && error.response.status === 403) {
-            return "You are not authorized to access this resource"
+            return "You are not authorized to access this resource, please raise a ticket to get the access"
         }
 
         if (error.response && error.response.status === 500) {

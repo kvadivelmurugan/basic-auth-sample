@@ -14,7 +14,6 @@ class AuthenticatedRoute extends Component {
             return <Route {...this.props} />
         } else {
             return <Redirect to="/login" />
-           
         }
         
     }
